@@ -1,13 +1,11 @@
 ---
 import { Image } from "astro:assets";
-import bg from "../../assets/seccion-24.webp"; // ajusta al nombre real
+import bg from "../../assets/seccion-24.webp";
 ---
 
 <section id="beneficios" class="bg-white py-10 sm:py-14">
   <div class="mx-auto w-[min(1200px,calc(100%-24px))]">
-    <!-- CARD -->
     <div class="relative overflow-hidden ">
-      <!-- Imagen “dentro del card” (como la referencia) -->
       <div class="pointer-events-none absolute inset-0">
         <Image
           src={bg}
@@ -16,7 +14,6 @@ import bg from "../../assets/seccion-24.webp"; // ajusta al nombre real
           loading="lazy"
           decoding="async"
         />
-        <!-- “lavado” para que se lea el texto igual que la referencia -->
         <div class="absolute inset-0 bg-white/55"></div>
         <div class="absolute inset-0 [background:radial-gradient(closest-side,rgba(255,255,255,0)_0%,rgba(255,255,255,0.65)_55%,rgba(255,255,255,0.92)_100%)]"></div>
       </div>
@@ -69,7 +66,7 @@ import bg from "../../assets/seccion-24.webp"; // ajusta al nombre real
             </ul>
           </div>
 
-          <!-- Derecha: 34 -->
+          <!-- Derecha:  -->
           <div class="md:pt-2">
             <div class="text-center md:text-right">
               <div class="text-[#0B5871] font-extrabold leading-none text-[92px] sm:text-[120px] md:text-[150px]">
@@ -86,7 +83,6 @@ import bg from "../../assets/seccion-24.webp"; // ajusta al nombre real
           </div>
         </div>
 
-        <!-- DIVIDER (como referencia) -->
         <div class="mt-10 sm:mt-12 "></div>
 
         <!-- STATS -->
