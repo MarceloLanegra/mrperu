@@ -1,5 +1,8 @@
 ---
+import { object } from "astro:schema";
 import Navbar from "../components/Navbar.astro";
+import Clientes from "../components/sections/Clientes.astro";
+import Beneficios from "../components/sections/Beneficios.astro"
 import "../styles/global.css";
 ---
 <!doctype html>
@@ -13,8 +16,10 @@ import "../styles/global.css";
 		<meta name="generator" content={Astro.generator} />
 		<title>MrPeru</title>
 	</head>
-	<body>
+	<>
 		<Navbar/>
+		<Clientes/>
+		<Beneficios/>
 	</body>
 </html>
 

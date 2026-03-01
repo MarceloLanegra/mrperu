@@ -1,0 +1,188 @@
+---
+import { Image } from "astro:assets";
+import bg from "../../assets/seccion-24.webp"; // ajusta al nombre real
+---
+
+<section id="beneficios" class="bg-white py-10 sm:py-14">
+  <div class="mx-auto w-[min(1200px,calc(100%-24px))]">
+    <!-- CARD -->
+    <div class="relative overflow-hidden ">
+      <!-- Imagen “dentro del card” (como la referencia) -->
+      <div class="pointer-events-none absolute inset-0">
+        <Image
+          src={bg}
+          alt=""
+          class="h-full w-full object-cover"
+          loading="lazy"
+          decoding="async"
+        />
+        <!-- “lavado” para que se lea el texto igual que la referencia -->
+        <div class="absolute inset-0 bg-white/55"></div>
+        <div class="absolute inset-0 [background:radial-gradient(closest-side,rgba(255,255,255,0)_0%,rgba(255,255,255,0.65)_55%,rgba(255,255,255,0.92)_100%)]"></div>
+      </div>
+
+      <!-- CONTENIDO -->
+      <div class="relative px-6 py-10 sm:px-10 sm:py-12 md:px-14 md:py-14">
+        <div class="grid gap-10 md:grid-cols-[1.05fr_0.95fr] md:items-start">
+          <!-- Izquierda -->
+          <div>
+            <h2 class="text-[#0B5871] font-extrabold leading-[1.02] text-[34px] sm:text-[44px]">
+              ¿POR QUÉ<br />ELEGIRNOS?
+            </h2>
+
+            <ul class="mt-6 space-y-5 text-slate-800 max-w-[520px]">
+              <li class="flex gap-3">
+                <span class="mt-[2px] inline-flex h-6 w-6 shrink-0 items-center justify-center text-[#0B5871]">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
+                    <path d="M8.2 12.3l2.2 2.2 5.6-5.6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                </span>
+                <p class="text-[15px] sm:text-[16px] leading-relaxed">
+                  Respaldamos cada proyecto con experiencia real en la industria peruana.
+                </p>
+              </li>
+
+              <li class="flex gap-3">
+                <span class="mt-[2px] inline-flex h-6 w-6 shrink-0 items-center justify-center text-[#0B5871]">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
+                    <path d="M8.2 12.3l2.2 2.2 5.6-5.6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                </span>
+                <p class="text-[15px] sm:text-[16px] leading-relaxed">
+                  Diseñamos soluciones que reducen costos y aseguran continuidad operativa.
+                </p>
+              </li>
+
+              <li class="flex gap-3">
+                <span class="mt-[2px] inline-flex h-6 w-6 shrink-0 items-center justify-center text-[#0B5871]">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
+                    <path d="M8.2 12.3l2.2 2.2 5.6-5.6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                </span>
+                <p class="text-[15px] sm:text-[16px] leading-relaxed">
+                  Contamos con un equipo técnico y comercial altamente capacitado, especializado en soluciones de aire comprimido con compresores Atlas Copco VSD.
+                </p>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Derecha: 34 -->
+          <div class="md:pt-2">
+            <div class="text-center md:text-right">
+              <div class="text-[#0B5871] font-extrabold leading-none text-[92px] sm:text-[120px] md:text-[150px]">
+                34
+              </div>
+              <div class="mt-1 text-slate-900 font-extrabold text-[20px] sm:text-[22px]">
+                años comprometidos
+              </div>
+              <p class="mt-2 text-slate-700 text-[14px] sm:text-[15px] leading-relaxed md:ml-auto md:max-w-[360px]">
+                con nuestro trabajo en sistemas<br class="hidden md:block" />
+                de aire comprimido industrial
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- DIVIDER (como referencia) -->
+        <div class="mt-10 sm:mt-12 "></div>
+
+        <!-- STATS -->
+        <div id="stats" class="mt-10 grid gap-8 sm:grid-cols-2 md:grid-cols-4">
+          <!-- item -->
+          <div class="text-center md:px-6 md:border-r md:border-slate-300/80">
+            <div class="text-[#0B5871] font-extrabold text-[40px]">
+              <span class="stat" data-to="400" data-prefix="+">0</span>
+            </div>
+            <p class="mt-1 text-slate-900 font-extrabold leading-tight">Empresas atendidas</p>
+            <p class="text-slate-600 text-sm leading-tight">en distintos sectores productivos del país</p>
+          </div>
+
+          <div class="text-center md:px-6 md:border-r md:border-slate-300/80">
+            <div class="text-[#0B5871] font-extrabold text-[40px]">
+              <span class="stat" data-to="100">0</span>
+            </div>
+            <p class="mt-1 text-slate-900 font-extrabold leading-tight">Clientes dentro del</p>
+            <p class="text-slate-600 text-sm leading-tight">Top 100 de mejores empresas</p>
+          </div>
+
+          <div class="text-center md:px-6 md:border-r md:border-slate-300/80">
+            <div class="text-[#0B5871] font-extrabold text-[40px]">
+              <span class="stat" data-to="500" data-prefix="+">0</span>
+            </div>
+            <p class="mt-1 text-slate-900 font-extrabold leading-tight">Compresores</p>
+            <p class="text-slate-600 text-sm leading-tight">vendidos</p>
+          </div>
+
+          <div class="text-center md:px-6">
+            <div class="text-[#0B5871] font-extrabold text-[40px]">
+              <span class="stat" data-to="100" data-suffix="%">0</span>
+            </div>
+            <p class="mt-1 text-slate-900 font-extrabold leading-tight">Equipos de calidad,</p>
+            <p class="text-slate-600 text-sm leading-tight">confiables y eficientes</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script is:inline>
+  const container = document.getElementById("stats");
+  if (!container) {
+    // no-op
+  } else {
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const stats = [...container.querySelectorAll(".stat")];
+
+    const format = (el, value) => {
+      const prefix = el.dataset.prefix || "";
+      const suffix = el.dataset.suffix || "";
+      return `${prefix}${value}${suffix}`;
+    };
+
+    const animate = (el) => {
+      const to = Number(el.dataset.to || "0");
+
+      // start at 0 (visual)
+      el.textContent = format(el, 0);
+
+      if (reduceMotion) {
+        el.textContent = format(el, to);
+        return;
+      }
+
+      const duration = 900; // ms
+      const start = performance.now();
+
+      const tick = (now) => {
+        const p = Math.min((now - start) / duration, 1);
+        const eased = 1 - Math.pow(1 - p, 3); // easeOutCubic
+        const value = Math.round(eased * to);
+        el.textContent = format(el, value);
+        if (p < 1) requestAnimationFrame(tick);
+      };
+
+      requestAnimationFrame(tick);
+    };
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            // run once
+            if (container.dataset.counted === "1") return;
+            container.dataset.counted = "1";
+            stats.forEach(animate);
+            io.disconnect();
+          }
+        });
+      },
+      { threshold: 0.25 }
+    );
+
+    io.observe(container);
+  }
+</script>
