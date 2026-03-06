@@ -36,8 +36,8 @@ const links = [
               class={
                 "transition text-[15px] font-semibold tracking-tight " +
                 (l.label === "Beneficios"
-                  ? "text-[#FBBE2E]"
-                  : "text-[#0197C5] hover:text-[#FBBE2E]")
+                  ? "text-yellow-mrperu"
+                  : "text-blue-mrperu hover:text-yellow-mrperu")
               }
             >
               {l.label}
@@ -53,7 +53,7 @@ const links = [
           href="#contacto"
           class="hidden sm:inline-flex items-center justify-center rounded-xl px-5 py-2 text-[15px] font-semibold
                  text-white transition
-                 bg-[#FBBE2E] hover:bg-[#F7B400]
+                 bg-yellow-mrperu hover:bg-[#F7B400]
                  shadow-[0_6px_14px_rgba(0,0,0,0.18)]
                  shadow-[inset_0_4.41px_12.12px_rgba(0,0,0,0.38),0_6px_14px_rgba(0,0,0,0.18)]"
         >
@@ -81,7 +81,7 @@ const links = [
               {links.map((l) => (
                 <a
                   href={l.href}
-                  class="block rounded-xl px-3 py-2 text-sm font-semibold text-[#0197C5] hover:bg-slate-50 hover:text-[#017AA3] transition"
+                  class="block rounded-xl px-3 py-2 text-sm font-semibold text-blue-mrperu hover:bg-slate-50 hover:text-[#017AA3] transition"
                 >
                   {l.label}
                 </a>
@@ -90,7 +90,7 @@ const links = [
               <a
                 href="#contacto"
                 class="mt-2 block rounded-xl px-3 py-2 text-sm font-semibold text-white text-center transition
-                       bg-[#FBBE2E] hover:bg-[#F7B400]
+                       bg-yellow-mrperu hover:bg-[#F7B400]
                        shadow-[inset_0_4.41px_12.12px_rgba(0,0,0,0.38),0_6px_14px_rgba(0,0,0,0.18)]"
               >
                 ¡Solicita diagnóstico gratis!

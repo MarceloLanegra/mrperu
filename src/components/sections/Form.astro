@@ -1,0 +1,38 @@
+---
+import Input from "../Input.astro";
+import Wrapper from "../Wrapper.astro";
+---
+
+<section class="py-20 bg-[url('../assets/banner-form.webp')] bg-contained bg-center bg-no-repeat" id="contact">
+    <Wrapper>
+        <div class="max-w-1/2">
+            <h4 class="text-white font-bold text-4xl text-pretty">Obtén un diagnóstico gratuito para conocer tu consumo energético.</h4>
+            <form action="" class="mt-6">
+                <div class="flex flex-col gap-4">
+                    <div>
+                        <Input name="name" placeholder="Nombre y Apellido" />
+                    </div>
+                    <div>
+                        <Input name="company" placeholder="Empresa" />
+                    </div>
+                    <div>
+                        <Input name="email" placeholder="Email Corporativo" type="email" />
+                    </div>
+                    <div>
+                        <Input name="phone" placeholder="Teléfono" type="tel" />
+                    </div>
+                </div>
+                <button type="submit" class="bg-yellow-mrperu py-2 px-8 rounded-full text-white text-xl font-semibold cursor-pointer hover:bg-yellow-mrperu/80 transition-colors duration-300 active:bg-yellow-mrperu/60 mt-8 mx-auto block">Enviar</button>
+            </form>
+        </div>
+    </Wrapper>
+</section>
+
+<script>
+    const form = document.querySelector("form");
+    form?.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const formData = new FormData(form);
+        console.log(formData);
+    });
+</script>

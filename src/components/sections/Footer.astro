@@ -1,0 +1,147 @@
+---
+import { Image } from "astro:assets";
+import Wrapper from "../Wrapper.astro";
+import logo from "../../assets/logo/mrperu-logo-transparent.webp";
+import linkedin from "../../assets/linkedin.svg";
+import youtube from "../../assets/youtube.svg";
+import facebook from "../../assets/facebook.svg";
+import instagram from "../../assets/instagram.svg";
+
+const year = new Date().getFullYear();
+
+const firstNavList = [
+    {
+        text: "Nosotros",
+        href: "#about-us",
+        external: false,
+    },
+    {
+        text: "Productos",
+        href: "#products",
+        external: false,
+    },
+    {
+        text: "Servicios",
+        href: "#services",
+        external: false,
+    },
+    {
+        text: "Alquileres",
+        href: "#rent",
+        external: false,
+    },
+    {
+        text: "Contacto",
+        href: "#contact",
+        external: false,
+    },
+    {
+        text: "Blog",
+        href: "https://www.google.com",
+        external: true,
+    },
+];
+
+const secondNavList = [
+    {
+        text: "Alquiler de Compresores",
+        href: "",
+        external: true
+    },
+    {
+        text: "Compresores de Aire",
+        href: "",
+        external: true
+    },
+    {
+        text: "Secadores de Aire",
+        href: "",
+        external: true
+    },
+    {
+        text: "Filtros de Aire",
+        href: "",
+        external: true
+    },
+    {
+        text: "Tratamiento de Condensados",
+        href: "",
+        external: true
+    },
+    {
+        text: "Purgadores Automáticos",
+        href: "",
+        external: true
+    },
+];
+---
+
+<footer class="bg-blue-mrperu pt-20 pb-4">
+    <Wrapper>
+        <div class="flex gap-32">
+            <div>
+                <Image
+                    src={logo}
+                    alt="Logo MR Perú"
+                    width={130}
+                    class="mx-auto"
+                />
+                <div class="flex gap-2 mt-2">
+                    <a href="" target="_blank">
+                        <Image
+                            src={linkedin}
+                            alt="LinkedIn MR Perú"
+                            width={35}
+                        />
+                    </a>
+                    <a href="" target="_blank">
+                        <Image src={youtube} alt="Youtube MR Perú" width={35} />
+                    </a>
+                    <a href="" target="_blank">
+                        <Image
+                            src={facebook}
+                            alt="Facebook MR Perú"
+                            width={35}
+                        />
+                    </a>
+                    <a href="" target="_blank">
+                        <Image
+                            src={instagram}
+                            alt="Instagram MR Perú"
+                            width={35}
+                        />
+                    </a>
+                </div>
+            </div>
+            <ul class="flex flex-col gap-4">
+                { firstNavList.map((item) => (
+                    <li>
+                        <a
+                            href={item.href}
+                            target={`${item.external ? "_blank" : "_self"}`}
+                            class="font-semibold text-lg text-white"
+                        >
+                            {item.text}
+                        </a>
+                    </li>
+                )) }
+            </ul>
+            <ul class="flex flex-col gap-4 font-semibold">
+                { secondNavList.map((item) => (
+                    <li>
+                        <a
+                            href={item.href}
+                            target={`${item.external ? "_blank" : "_self"}`}
+                            class="text-lg text-white"
+                        >
+                            {item.text}
+                        </a>
+                    </li>
+                )) }
+            </ul>
+        </div>
+        <p class="text-white text-center mt-12">
+            © {year} MR Perú. Todos los derechos reservados.
+        </p>
+    </Wrapper>
+</footer>

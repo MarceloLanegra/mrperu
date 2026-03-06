@@ -1,0 +1,82 @@
+---
+export interface Props {
+    id?: string
+    name?: string
+    label?: string
+    type?: "text" | "password" | "email" | "number" | "tel" | "url" | "search" | "date" | "time" | "datetime-local" | "month" | "week" | "file" | "checkbox" | "radio" | "hidden" | "image" | "button" | "submit" | "reset" | "color" | "range"
+    value?: string
+    placeholder?: string
+    error?: string
+    helperText?: string
+    required?: boolean
+    disabled?: boolean
+    iconLeft?: string
+    iconRight?: string
+    class?: string
+}
+
+const { id, name, label, type = 'text', value, placeholder, error, helperText, required = false, disabled = false, iconLeft, iconRight, class: className = '' } = Astro.props;
+
+const inputId = id || `input-${name || Math.random().toString(36).slice(2)}`
+const describedBy = error
+  ? `${inputId}-error`
+  : helperText
+  ? `${inputId}-helper`
+  : undefined
+---
+
+<div class="w-full">
+    { label && (
+        <label
+            for={inputId}
+            class="block text-sm font-medium mb-1 text-gray-700"
+        >
+            {label}
+            {required && <span class="text-red-500 ml-1">*</span>}
+        </label>
+    ) }
+    <div class="relative">
+    {iconLeft && (
+      <span class="absolute inset-y-0 left-3 flex items-center text-gray-400">
+        <span set:html={iconLeft} />
+      </span>
+    )}
+    <input
+      id={inputId}
+      name={name}
+      type={type}
+      value={value}
+      placeholder={placeholder}
+      required={required}
+      disabled={disabled}
+      aria-invalid={!!error}
+      aria-describedby={describedBy}
+      class={`w-full rounded-full border-none px-4 py-2 text-base outline-none transition text-white placeholder-gray-200 font-semibold
+        ${iconLeft ? "pl-10" : ""}
+        ${iconRight ? "pr-10" : ""}
+        ${error
+          ? "border-red-500 focus:ring-2 focus:ring-red-200"
+          : "border-gray-300 focus:ring-2 focus:ring-blue-200 focus:border-blue-500"}
+        ${disabled ? "bg-gray-100 cursor-not-allowed" : "bg-white/20"}
+        ${className}
+      `}
+    />
+    {iconRight && (
+      <span class="absolute inset-y-0 right-3 flex items-center text-gray-400">
+        <span set:html={iconRight} />
+      </span>
+    )}
+  </div>
+
+  {error && (
+    <p id={`${inputId}-error`} class="mt-1 text-sm text-red-600">
+      {error}
+    </p>
+  )}
+
+  {!error && helperText && (
+    <p id={`${inputId}-helper`} class="mt-1 text-sm text-gray-500">
+      {helperText}
+    </p>
+  )}
+</div>
