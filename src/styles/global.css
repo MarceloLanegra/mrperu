@@ -1,15 +1,14 @@
+@import url("https://use.typekit.net/kfy6hdf.css");
+@import "tailwindcss";
 
-  
-  /* Tailwind v4 */
-  @import "tailwindcss";
+@theme {
+  --font-aptos: "aptos", sans-serif;
+  --color-yellow-mrperu: #FBBE2E;
+  --color-blue-mrperu: #0197C5;
+}
 
-  
-  html, body {
-    font-family: "aptos", sans-serif;
-    font-weight: 400; /* Regular */
-  }
-
-  a{
-    font-family: "aptos", sans-serif;
-    font-weight: 400; /* Regular */
-  }
+@layer base {
+  html, body, a {
+    font-weight: 400;
+  } 
+}
