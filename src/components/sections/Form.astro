@@ -3,12 +3,12 @@ import Input from "../Input.astro";
 import Wrapper from "../Wrapper.astro";
 ---
 
-<section class="py-20 bg-[url('../assets/banner-form.webp')] bg-cover bg-center bg-no-repeat" id="contact">
+<section class="flex min-h-screen items-center bg-[url('../assets/bg-form-xs.webp')] bg-cover bg-center bg-no-repeat py-12 sm:min-h-0 sm:bg-[url('../assets/bg-form.webp')] sm:items-start sm:py-16 lg:py-20" id="contact">
     <Wrapper>
-        <div class="max-w-1/2">
-            <h4 class="text-white font-bold text-4xl text-pretty">Obtén un diagnóstico gratuito para conocer tu consumo energético.</h4>
-            <form action="" class="mt-6">
-                <div class="flex flex-col gap-4">
+        <div class="mx-auto w-full max-w-[16rem] px-2 py-6 sm:mx-0 sm:max-w-[42rem] sm:px-0 sm:py-0 lg:max-w-[34rem]">
+            <h4 class="max-w-[13rem] text-pretty text-[1.05rem] font-bold leading-tight text-white sm:max-w-none sm:text-3xl lg:text-4xl">Obtén un diagnóstico gratuito para conocer tu consumo energético.</h4>
+            <form action="" class="mt-8 sm:mt-6">
+                <div class="flex flex-col gap-7 sm:gap-4">
                     <div>
                         <Input name="name" placeholder="Nombre y Apellido" />
                     </div>
@@ -22,7 +22,7 @@ import Wrapper from "../Wrapper.astro";
                         <Input name="phone" placeholder="Teléfono" type="tel" />
                     </div>
                 </div>
-                <button type="submit" class="bg-yellow-mrperu py-2 px-8 rounded-full text-white text-xl font-semibold cursor-pointer hover:bg-yellow-mrperu/80 transition-colors duration-300 active:bg-yellow-mrperu/60 mt-8 mx-auto block">Enviar</button>
+                <button type="submit" class="mt-14 mx-auto block cursor-pointer rounded-full bg-yellow-mrperu px-7 py-2.5 text-[1rem] font-semibold text-white transition-colors duration-300 hover:bg-yellow-mrperu/80 active:bg-yellow-mrperu/60 sm:mt-8 sm:px-8 sm:text-xl">Enviar</button>
             </form>
         </div>
     </Wrapper>

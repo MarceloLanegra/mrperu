@@ -1,62 +1,81 @@
 ---
-/**
- * Pon tus videos en /public/videos/
- * Ej: /public/videos/que-es-compresor-vsd.mp4
- *     /public/videos/smartlink.mp4
- *
- * Si aún no tienes mp4, igual funciona con el layout (solo cambia src).
- */
- const videos = [
+type VideoItem = {
+  id: string;
+  titleTop: string;
+  caption: string;
+  embed?: string;
+  src?: string;
+  isShort?: boolean;
+};
+
+const videos: VideoItem[] = [
   {
     id: "video-vsd",
     titleTop: "QUÉ ES UN COMPRESOR VSD",
-    src: "/videos/que-es-compresor-vsd.mp4",
-    poster: "/videos/poster-vsd.jpg", // opcional
+    embed: "https://www.youtube.com/embed/oHRtH1gK1_s?si=XVNIigWs7r-K3_GV",
     caption: "¿QUÉ ES UN COMPRESOR VSD?",
   },
   {
     id: "video-smartlink",
     titleTop: "SMARTLINK",
-    src: "/videos/smartlink.mp4",
-    poster: "/videos/poster-smartlink.jpg", // opcional
+    embed: "https://www.youtube.com/embed/j_84yQlYrtM",
+    isShort: true,
     caption: "¿Te imaginas monitorear tus compresores desde tu teléfono?",
   },
 ];
 ---
 
-<section id="videos" class="bg-white py-10 sm:py-14">
-  <div class="mx-auto w-[min(1400px,calc(100%-24px))] space-y-10 sm:space-y-14">
+<section id="videos" class="bg-white py-8 sm:py-12 lg:py-14">
+  <div class="mx-auto w-[min(1400px,calc(100%-20px))] space-y-8 sm:w-[min(1400px,calc(100%-24px))] sm:space-y-12 lg:space-y-14">
     {videos.map((v) => (
-      <div class="relative rounded-[28px] border-2 border-blue-mrperu bg-[#F2F2F2] px-4 pb-10 pt-14 sm:px-8 sm:pt-16">
+      <div class="relative rounded-[22px] border-2 border-blue-mrperu bg-[#F2F2F2] px-3 pb-6 pt-12 sm:rounded-[28px] sm:px-6 sm:pb-8 sm:pt-14 lg:px-8 lg:pb-10 lg:pt-16">
         {/* pill superior */}
-        <div class="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2">
+        <div class="absolute left-1/2 top-0 z-10 w-[calc(100%-24px)] max-w-max -translate-x-1/2 -translate-y-1/2 sm:w-auto">
           <div
-            class="rounded-[14px] bg-white px-6 py-3 text-center
-                   shadow-[0_10px_25px_rgba(0,0,0,0.20)] ring-1 ring-black/5"
+            class="rounded-[12px] bg-white px-4 py-2 text-center
+                   shadow-[0_10px_25px_rgba(0,0,0,0.20)] ring-1 ring-black/5 sm:rounded-[14px] sm:px-6 sm:py-3"
           >
-            <span class="text-blue-mrperu font-extrabold tracking-wide text-[18px] sm:text-[22px]">
+            <span class="text-blue-mrperu block text-balance font-extrabold tracking-wide text-[14px] leading-tight sm:text-[18px] lg:text-[22px]">
               {v.titleTop}
             </span>
           </div>
         </div>
 
         {/* card del video */}
-        <div class="mx-auto w-full max-w-[860px]">
-          <div class="overflow-hidden rounded-[22px] bg-white shadow-[0_22px_60px_rgba(0,0,0,0.35)] ring-1 ring-black/5">
+        <div class:list={[
+          "mx-auto w-full",
+          v.isShort ? "max-w-[280px] sm:max-w-[360px] lg:max-w-[420px]" : "max-w-full lg:max-w-[860px]",
+        ]}>
+          <div class="overflow-hidden rounded-[18px] bg-white shadow-[0_18px_40px_rgba(0,0,0,0.22)] ring-1 ring-black/5 sm:rounded-[22px] sm:shadow-[0_22px_60px_rgba(0,0,0,0.35)]">
             <div class="bg-white">
-              <video
-                class="block w-full aspect-video bg-black"
-                controls
-                playsinline
-                preload="metadata"
-                poster={v.poster}
-              >
-                <source src={v.src} type="video/mp4" />
-                Tu navegador no soporta videos HTML5.
-              </video>
+              {v.embed ? (
+                <iframe
+                  class:list={[
+                    "block bg-black w-full mx-auto",
+                    v.isShort ? "aspect-[9/16]" : "aspect-video",
+                  ]}
+                  src={v.embed}
+                  title={v.caption}
+                  frameborder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  referrerpolicy="strict-origin-when-cross-origin"
+                  allowfullscreen
+                />
+              ) : (
+                <video
+                  class:list={[
+                    "block bg-black w-full mx-auto",
+                    v.isShort ? "aspect-[9/16]" : "aspect-video",
+                  ]}
+                  controls
+                  playsinline
+                  preload="metadata"
+                >
+                  {v.src && <source src={v.src} type="video/mp4" />}
+                  Tu navegador no soporta videos HTML5.
+                </video>
+              )}
             </div>
-
-
           </div>
         </div>
       </div>

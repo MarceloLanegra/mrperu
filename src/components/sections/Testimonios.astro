@@ -1,0 +1,289 @@
+
+
+---
+const cards = [
+  {
+    id: 1,
+    name: "Lucía Rivera",
+    role: "Directora",
+    text: "testimonio",
+    image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=900&q=80",
+  },
+  {
+    id: 2,
+    name: "Lucía Rivera",
+    role: "Directora",
+    text: "testimonio",
+    image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=900&q=80",
+  },
+  {
+    id: 3,
+    name: "Lucía Rivera",
+    role: "Directora",
+    text: "testimonio",
+    image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=900&q=80",
+    featured: true,
+  },
+  {
+    id: 4,
+    name: "Lucía Rivera",
+    role: "Directora",
+    text: "testimonio",
+    image: "https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?auto=format&fit=crop&w=900&q=80",
+  },
+  {
+    id: 5,
+    name: "Lucía Rivera",
+    role: "Directora",
+    text: "testimonio",
+    image: "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=900&q=80",
+  },
+];
+---
+
+<section id="testimonios" class="bg-[#efefef] py-8 sm:py-12 lg:py-14">
+  <div class="mx-auto w-[min(1400px,calc(100%-16px))] sm:w-[min(1400px,calc(100%-24px))]">
+    <div class="relative mb-8 sm:mb-10">
+      <div class="h-px w-full bg-slate-300"></div>
+      <div class="absolute left-1/2 top-0 z-10 w-[calc(100%-16px)] max-w-max -translate-x-1/2 -translate-y-1/2 sm:w-auto">
+        <div class="rounded-[12px] bg-white px-5 py-2 shadow-[0_10px_25px_rgba(0,0,0,0.18)] ring-1 ring-black/5 sm:rounded-[14px] sm:px-6">
+          <span class="text-blue-mrperu block text-balance font-extrabold tracking-wide text-[14px] leading-tight sm:text-[16px] lg:text-[18px]">
+            TESTIMONIOS
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="relative overflow-hidden py-8 sm:py-10 lg:py-12">
+      <div class="pointer-events-none absolute inset-y-0 left-0 z-[1] w-10 bg-gradient-to-r from-[#efefef] to-transparent sm:w-16"></div>
+      <div class="pointer-events-none absolute inset-y-0 right-0 z-[1] w-10 bg-gradient-to-l from-[#efefef] to-transparent sm:w-16"></div>
+
+      <div class="testimonios-stage">
+        {cards.map((card, index) => {
+          const positionClass =
+            index === 0
+              ? "card-left-2"
+              : index === 1
+                ? "card-left-1"
+                : index === 2
+                  ? "card-center"
+                  : index === 3
+                    ? "card-right-1"
+                    : "card-right-2";
+
+          return (
+            <article class:list={["testimonial-card", positionClass, card.featured && "is-featured"]}>
+              <div class="testimonial-image-wrap">
+                <img
+                  src={card.image}
+                  alt={`${card.name}, ${card.role}`}
+                  class="testimonial-image"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+
+              <div class="testimonial-info">
+                <h3>{card.name} / {card.role}</h3>
+                <p>{card.text}</p>
+              </div>
+            </article>
+          );
+        })}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .testimonios-stage{
+    position: relative;
+    height: 470px;
+  }
+
+  .testimonial-card{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 190px;
+    border-radius: 24px;
+    overflow: hidden;
+    background: #fff;
+    box-shadow: 0 18px 38px rgba(0,0,0,0.18);
+    transform: translate(-50%, -50%) scale(.82);
+    opacity: .7;
+    filter: blur(2px);
+    transition: transform .35s ease, opacity .35s ease, filter .35s ease, box-shadow .35s ease;
+    z-index: 1;
+  }
+
+  .testimonial-image-wrap{
+    height: 250px;
+    overflow: hidden;
+  }
+
+  .testimonial-image{
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .testimonial-info{
+    background: #08a2d7;
+    color: #fff;
+    padding: 14px 14px 18px;
+    min-height: 98px;
+  }
+
+  .testimonial-info h3{
+    margin: 0;
+    font-size: 13px;
+    line-height: 1.25;
+    font-weight: 400;
+  }
+
+  .testimonial-info p{
+    margin: 4px 0 0;
+    font-size: 11px;
+    line-height: 1.35;
+    opacity: .95;
+  }
+
+  .card-left-2{
+    transform: translate(calc(-50% - 310px), -50%) scale(.82);
+    z-index: 1;
+  }
+
+  .card-left-1{
+    transform: translate(calc(-50% - 155px), -50%) scale(.9);
+    z-index: 2;
+  }
+
+  .card-center{
+    transform: translate(-50%, -50%) scale(1.06);
+    opacity: 1;
+    filter: blur(0);
+    box-shadow: 0 24px 56px rgba(0,0,0,0.22);
+    z-index: 3;
+  }
+
+  .card-right-1{
+    transform: translate(calc(-50% + 155px), -50%) scale(.9);
+    z-index: 2;
+  }
+
+  .card-right-2{
+    transform: translate(calc(-50% + 310px), -50%) scale(.82);
+    z-index: 1;
+  }
+
+  .card-left-1,
+  .card-right-1,
+  .card-left-2,
+  .card-right-2{
+    opacity: .72;
+    filter: blur(2.2px);
+  }
+
+  @media (min-width: 640px){
+    .testimonios-stage{
+      height: 520px;
+    }
+
+    .testimonial-card{
+      width: 240px;
+    }
+
+    .testimonial-image-wrap{
+      height: 320px;
+    }
+
+    .testimonial-info{
+      padding: 18px 18px 22px;
+      min-height: 114px;
+    }
+
+    .testimonial-info h3{
+      font-size: 18px;
+    }
+
+    .testimonial-info p{
+      margin-top: 6px;
+      font-size: 14px;
+    }
+
+    .card-left-2{
+      transform: translate(calc(-50% - 400px), -50%) scale(.84);
+    }
+
+    .card-left-1{
+      transform: translate(calc(-50% - 210px), -50%) scale(.92);
+    }
+
+    .card-center{
+      transform: translate(-50%, -50%) scale(1.06);
+    }
+
+    .card-right-1{
+      transform: translate(calc(-50% + 210px), -50%) scale(.92);
+    }
+
+    .card-right-2{
+      transform: translate(calc(-50% + 400px), -50%) scale(.84);
+    }
+  }
+
+  @media (max-width: 639px){
+    .testimonios-stage{
+      height: 420px;
+    }
+
+    .testimonial-card{
+      width: 170px;
+      border-radius: 20px;
+    }
+
+    .testimonial-image-wrap{
+      height: 220px;
+    }
+
+    .testimonial-info{
+      padding: 12px 12px 16px;
+      min-height: 88px;
+    }
+
+    .testimonial-info h3{
+      font-size: 12px;
+    }
+
+    .testimonial-info p{
+      font-size: 10px;
+    }
+
+    .card-left-2{
+      transform: translate(calc(-50% - 118px), -50%) scale(.72);
+      opacity: .42;
+    }
+
+    .card-left-1{
+      transform: translate(calc(-50% - 58px), -50%) scale(.82);
+      opacity: .58;
+    }
+
+    .card-center{
+      transform: translate(-50%, -50%) scale(1);
+      z-index: 4;
+    }
+
+    .card-right-1{
+      transform: translate(calc(-50% + 58px), -50%) scale(.82);
+      opacity: .58;
+    }
+
+    .card-right-2{
+      transform: translate(calc(-50% + 118px), -50%) scale(.72);
+      opacity: .42;
+    }
+  }
+</style>

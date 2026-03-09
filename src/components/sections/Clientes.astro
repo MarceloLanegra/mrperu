@@ -19,16 +19,16 @@ const clients = Object.entries(modules)
 const track = [...clients, ...clients];
 ---
 
-<section id="clientes" class="w-full bg-blue-mrperu">
-  <div class="mx-auto w-[min(1200px,calc(100%-24px))] py-3">
-    <div class="flex items-center gap-4">
+<section id="clientes" class="w-full bg-blue-mrperu py-2 sm:py-0">
+  <div class="mx-auto w-[min(1200px,calc(100%-20px))] py-3 sm:w-[min(1200px,calc(100%-24px))] sm:py-4">
+    <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
       <div class="shrink-0">
-        <span class="inline-flex items-center rounded-2xl border border-white/70 px-4 py-2 text-sm font-semibold text-white">
+        <span class="inline-flex items-center rounded-2xl border border-white/70 px-3 py-1.5 text-xs font-semibold text-white sm:px-4 sm:py-2 sm:text-sm">
           Principales Clientes
         </span>
       </div>
 
-      <div class="relative flex-1 overflow-hidden">
+      <div class="relative w-full flex-1 overflow-hidden">
         <div class="clients-track">
           {track.map((c) => (
             <div class="client-item">
@@ -49,13 +49,13 @@ const track = [...clients, ...clients];
   .clients-track{
     display:flex;
     align-items:center;
-    gap:40px;
+    gap:32px;
     width:max-content;
     animation: scroll 22s linear infinite;
   }
 
   .client-item{
-    height: 36px;           /* ajusta tamaño */
+    height: 30px;
     display:flex;
     align-items:center;
     flex: 0 0 auto;
@@ -71,8 +71,17 @@ const track = [...clients, ...clients];
     to   { transform: translateX(-50%); }
   }
 
-  @media (max-width: 640px){
-    .clients-track{ gap: 28px; animation-duration: 18s; }
-    .client-item{ height: 28px; }
+  @media (min-width: 640px){
+    .clients-track{ gap: 36px; }
+    .client-item{ height: 34px; }
+  }
+
+  @media (min-width: 1024px){
+    .clients-track{ gap: 40px; }
+    .client-item{ height: 36px; }
+  }
+
+  @media (max-width: 639px){
+    .clients-track{ animation-duration: 18s; }
   }
 </style>

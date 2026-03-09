@@ -1,0 +1,21 @@
+---
+import Image from "astro/components/Image.astro";
+import Wrapper from "../Wrapper.astro";
+import beneficiosDesktop from "../../assets/img-beneficios.webp";
+import beneficiosMobile from "../../assets/img-beneficios-xs.webp";
+---
+
+<section id="beneficios" class="bg-white py-8 sm:py-12 lg:py-14">
+  <Wrapper>
+    <picture class="block overflow-hidden rounded-[18px] shadow-[0_16px_34px_rgba(0,0,0,0.16)] sm:rounded-[24px] lg:rounded-[28px] lg:shadow-[0_22px_60px_rgba(0,0,0,0.18)]">
+      <source srcset={beneficiosDesktop.src} media="(min-width: 640px)" />
+      <Image
+        src={beneficiosMobile}
+        alt="Beneficios del compresor con sus principales componentes y ventajas"
+        class="block h-auto w-full"
+        loading="lazy"
+        decoding="async"
+      />
+    </picture>
+  </Wrapper>
+</section>
