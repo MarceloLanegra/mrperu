@@ -5,27 +5,28 @@ const title = "CASOS DE ÉXITO";
 const videos = [
   {
     id: "caso-1",
-    label: "Instalación VSD en supermercados peruanos Punta Negra",
-    src: "/casos-exito/INSTALACION-VSD-EN-SUPERMERCADOS-PERUANOS-PUNTA-NEGRA.mp4",
-    poster: "/thumbs/INSTALACION-VSD-EN-SUPERMERCADOS-PERUANOS-PUNTA-NEGRA.jpg",
-  },
-  {
-    id: "caso-2",
     label: "MR Chincha Arándanos",
     src: "/casos-exito/MR-CHINCHA-ARANDANOS-30seg.mp4",
     poster: "/thumbs/MR-CHINCHA-ARANDANOS-30seg.jpg",
+
   },
   {
-    id: "caso-3",
+    id: "caso-2",
     label: "MR Chincha Frescos",
     src: "/casos-exito/MR-CHINCHA-FRESCOS-30seg.mp4",
     poster: "/thumbs/MR-CHINCHA-FRESCOS-30seg.jpg",
   },
   {
-    id: "caso-4",
+    id: "caso-3",
     label: "Planta generadora de oxígeno",
     src: "/casos-exito/Planta-Generadora-de-Oxigeno-compresor-Atlas-Copco.mp4",
     poster: "/thumbs/Planta-Generadora-de-Oxigeno-compresor-Atlas-Copco.jpg",
+  },
+  {
+    id: "caso-4",
+    label: "Instalación VSD en supermercados peruanos Punta Negra",
+    src: "/casos-exito/INSTALACION-VSD-EN-SUPERMERCADOS-PERUANOS-PUNTA-NEGRA.mp4",
+    poster: "/thumbs/INSTALACION-VSD-EN-SUPERMERCADOS-PERUANOS-PUNTA-NEGRA.jpg",
   },
   {
     id: "caso-5",
@@ -75,10 +76,10 @@ const list = videos.slice(1);
     <!-- Layout: grande + listado de videos -->
     <div class="grid gap-4 sm:gap-5 lg:gap-6 md:grid-cols-[1.35fr_0.65fr] md:items-start">
       <!-- Player grande -->
-      <div class="overflow-hidden rounded-[16px] bg-white shadow-[0_14px_28px_rgba(0,0,0,0.14)] ring-1 ring-black/5 sm:rounded-[20px] sm:shadow-[0_16px_34px_rgba(0,0,0,0.16)] lg:rounded-[22px] lg:shadow-[0_22px_60px_rgba(0,0,0,0.22)]">
+      <div class="overflow-hidden rounded-[16px] bg-white shadow-[0_14px_28px_rgba(0,0,0,0.14)] sm:rounded-[20px] sm:shadow-[0_16px_34px_rgba(0,0,0,0.16)] lg:rounded-[22px] lg:shadow-[0_22px_60px_rgba(0,0,0,0.22)]">
         <video
           id="casos-main-video"
-          class="block w-full aspect-video bg-black object-cover"
+          class="block w-full aspect-video object-cover"
           controls
           playsinline
           preload="metadata"
@@ -91,11 +92,11 @@ const list = videos.slice(1);
       </div>
 
       <!-- Lista lateral / carrusel en mobile -->
-      <div class="flex gap-4 overflow-x-auto pb-2 md:grid md:max-h-[540px] md:grid-cols-1 md:gap-4 md:overflow-y-auto md:overflow-x-hidden md:pb-0 pr-1">
+      <div class="flex gap-4 overflow-x-auto bg-transparent pb-2 md:grid md:max-h-[540px] md:grid-cols-1 md:gap-4 md:overflow-y-auto md:overflow-x-hidden md:pb-0 pr-1">
         {list.map((t) => (
           <button
             type="button"
-            class="casos-thumb group relative min-w-[260px] overflow-hidden rounded-[14px] bg-white text-left shadow-[0_12px_24px_rgba(0,0,0,0.14)] ring-1 ring-black/5 transition hover:-translate-y-0.5 hover:shadow-[0_16px_32px_rgba(0,0,0,0.16)] focus:outline-none focus:ring-2 focus:ring-blue-mrperu/60 sm:min-w-[300px] sm:rounded-[18px] sm:shadow-[0_14px_34px_rgba(0,0,0,0.16)] md:min-w-0"
+            class="casos-thumb group relative min-w-[260px] overflow-hidden rounded-[14px] bg-white text-left shadow-[0_12px_24px_rgba(0,0,0,0.14)] transition hover:-translate-y-0.5 hover:shadow-[0_16px_32px_rgba(0,0,0,0.16)] focus:outline-none focus:ring-2 sm:min-w-[300px] sm:rounded-[18px] sm:shadow-[0_14px_34px_rgba(0,0,0,0.16)] md:min-w-0"
             data-video-src={t.src}
             data-video-poster={t.poster}
             aria-label={`Ver ${t.label}`}
@@ -109,11 +110,11 @@ const list = videos.slice(1);
                 decoding="async"
               />
               <span class="absolute inset-0 bg-black/0 transition group-hover:bg-black/10"></span>
-              <span class="absolute left-2 bottom-2 inline-flex items-center gap-1.5 rounded-full bg-white/90 px-2 py-1 text-[10px] font-extrabold text-[#0B5871] shadow sm:left-3 sm:bottom-3 sm:gap-2 sm:px-3 sm:text-xs">
+              <span class="absolute left-2 bottom-2 bg-white inline-flex items-center gap-1.5 rounded-full px-2 py-1 text-[10px] font-extrabold text-[#0B5871] shadow sm:left-3 sm:bottom-3 sm:gap-2 sm:px-3 sm:text-xs">
                 ▶ Ver
               </span>
             </div>
-            <span class="block px-3 py-3 text-sm font-bold leading-snug text-slate-800 sm:px-4">
+            <span class="block bg-white px-3 py-3 text-sm font-bold leading-snug text-slate-800 sm:px-4">
               {t.label}
             </span>
           </button>
@@ -130,30 +131,18 @@ const list = videos.slice(1);
   if (mainVideo && mainSource) {
     const buttons = document.querySelectorAll(".casos-thumb[data-video-src][data-video-poster]");
 
-    const setActive = (activeButton) => {
-      buttons.forEach((button) => {
-        button.classList.remove("ring-2", "ring-blue-mrperu");
-      });
-
-      if (activeButton) {
-        activeButton.classList.add("ring-2", "ring-blue-mrperu");
-      }
-    };
-
     buttons.forEach((btn, index) => {
-      if (index === 0) setActive(btn);
-
       btn.addEventListener("click", () => {
         const src = btn.getAttribute("data-video-src");
         const poster = btn.getAttribute("data-video-poster");
         if (!src) return;
-
         mainVideo.pause();
+        mainVideo.currentTime = 0;
         mainVideo.setAttribute("poster", poster || "");
         mainSource.setAttribute("src", src);
         mainVideo.load();
         setActive(btn);
-        // mainVideo.play().catch(() => {});
+        mainVideo.play().catch(() => {});
       });
     });
   }
