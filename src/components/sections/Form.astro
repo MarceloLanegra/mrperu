@@ -1,4 +1,5 @@
 ---
+import { actions } from "astro:actions";
 import Input from "../Input.astro";
 import Wrapper from "../Wrapper.astro";
 ---
@@ -25,22 +26,44 @@ import Wrapper from "../Wrapper.astro";
           Completa tus datos y nuestro equipo te contactará para evaluar tu consumo y proponerte una solución más eficiente.
         </p>
 
-        <form id="contact-form" action="" class="mt-8 sm:mt-7">
+        <form method="post" id="contact-form" action={actions.sendContactEmail} class="mt-8 sm:mt-7">
           <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-4">
             <div class="sm:col-span-2">
-              <Input name="name" placeholder="Nombre y apellido" />
+              <Input
+                required
+                name="fullName"
+                placeholder="Nombre y apellido"
+              />
+              <span id="fullName-error" class="hidden mt-2 ml-4 text-sm"></span>
             </div>
             <div class="sm:col-span-2">
-              <Input name="company" placeholder="Empresa" />
+              <Input
+                required
+                name="company"
+                placeholder="Empresa"
+              />
+              <span id="company-error" class="hidden mt-2 ml-4 text-sm"></span>
             </div>
             <div>
-              <Input name="email" placeholder="Email corporativo" type="email" />
+              <Input
+                required
+                name="email"
+                placeholder="Email corporativo"
+                type="email"
+              />
+              <span id="email-error" class="hidden mt-2 ml-4 text-sm"></span>
             </div>
             <div>
-              <Input name="phone" placeholder="Teléfono" type="tel" />
+              <Input
+                required
+                name="phone"
+                placeholder="Teléfono"
+                type="tel"
+              />
+              <span id="phone-error" class="hidden mt-2 ml-4 text-sm"></span>
             </div>
           </div>
-
+          <span id="form-message" class="hidden mt-4 text-sm text-center"></span>
           <div class="mt-7 flex flex-col gap-3 sm:mt-8 sm:flex-row sm:items-center sm:justify-between">
             <p class="text-xs leading-5 text-white/70 sm:max-w-[16rem]">
               Al enviar este formulario, aceptas ser contactado por nuestro equipo comercial.
@@ -59,12 +82,76 @@ import Wrapper from "../Wrapper.astro";
   </Wrapper>
 </section>
 
-<script is:inline>
-  const form = document.querySelector('#contact-form');
+<script>
+  import { isInputError } from "astro:actions"
+  import { actions } from "astro:actions"
 
-  form?.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const formData = new FormData(form);
-    console.log(Object.fromEntries(formData.entries()));
-  });
+  const form = document.getElementById('contact-form') as HTMLFormElement
+  const messageResponse = document.getElementById('form-message') as HTMLSpanElement
+  const fullNameError = document.getElementById('fullName-error') as HTMLSpanElement
+  const companyError = document.getElementById('company-error') as HTMLSpanElement
+  const emailError = document.getElementById('email-error') as HTMLSpanElement
+  const phoneError = document.getElementById('phone-error') as HTMLSpanElement
+
+  const clearErrors = () => {
+    messageResponse.classList.add('hidden')
+    messageResponse.classList.remove('block','text-red-500', 'text-green-500')
+    fullNameError.classList.add('hidden')
+    fullNameError.classList.remove('block', 'text-red-500')
+    companyError.classList.add('hidden')
+    companyError.classList.remove('block', 'text-red-500')
+    emailError.classList.add('hidden')
+    emailError.classList.remove('block', 'text-red-500')
+    phoneError.classList.add('hidden')
+    phoneError.classList.remove('block', 'text-red-500')
+  }
+
+  clearErrors()
+
+  const handleSubmit = async (e: Event) => {
+    e.preventDefault()
+    clearErrors()
+    const form = e.target as HTMLFormElement
+    const formData = new FormData(form)
+
+    const { data, error } = await actions.sendContactEmail(formData)
+    
+    if (data) {
+      form.reset()
+      messageResponse.textContent = data.message
+      messageResponse.classList.remove('hidden')
+      messageResponse.classList.add('block', 'text-green-500')
+    } 
+
+    if (isInputError(error)) {
+      if (error.fields.fullName) {
+        const message = error.fields.fullName.join(', ')
+        fullNameError.textContent = message
+        fullNameError.classList.remove('hidden')
+        fullNameError.classList.add('block', 'text-red-500')
+      }
+      if (error.fields.company) {
+        const message = error.fields.company.join(', ')
+        companyError.textContent = message
+        companyError.classList.remove('hidden')
+        companyError.classList.add('block', 'text-red-500')
+      }
+      if (error.fields.email) {
+        const message = error.fields.email.join(', ')
+        emailError.textContent = message
+        emailError.classList.remove('hidden')
+        emailError.classList.add('block', 'text-red-500')
+      }
+      if (error.fields.phone) {
+        const message = error.fields.phone.join(', ')
+        phoneError.textContent = message
+        phoneError.classList.remove('hidden')
+        phoneError.classList.add('block', 'text-red-500')
+      }
+    }
+  }
+
+  if (form && form instanceof HTMLFormElement) {
+    form.addEventListener('submit', (e) => handleSubmit(e))
+  }
 </script>
