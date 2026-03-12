@@ -1,13 +1,25 @@
 ---
 import Image from "astro/components/Image.astro";
 import Wrapper from "../Wrapper.astro";
-import beneficiosDesktop from "../../assets/bg-beneficios.webp";
+import beneficiosDesktop from "../../assets/bg-beneficios-2.jpg";
 import beneficiosMobile from "../../assets/img-beneficios-xs.webp";
+
+const title = "BENEFICIOS EXCLUSIVOS DEL COMPRESOR VSDS";
 ---
 
 <section id="beneficios" class="bg-white py-8 sm:py-12 lg:py-14 scroll-mt-24">
   <Wrapper>
-    <picture class="block overflow-hidden  shadow-[0_16px_34px_rgba(0,0,0,0.16)] lg:shadow-[0_22px_60px_rgba(0,0,0,0.18)]">
+    <div class="relative mb-5 sm:mb-8 lg:mb-10">
+      <div class="h-px w-full bg-slate-200"></div>
+      <div class="absolute left-1/2 top-0 z-10 w-[calc(100%-16px)] max-w-max -translate-x-1/2 -translate-y-1/2 sm:w-auto mb-2">
+        <div class="rounded-[12px] bg-white px-3 py-2 shadow-[0_10px_25px_rgba(0,0,0,0.18)] ring-1 ring-black/5 sm:rounded-[14px] sm:px-6">
+          <span class="text-blue-mrperu text-center block text-balance font-extrabold tracking-wide text-[12px] leading-tight sm:text-[14px] lg:text-[22px]">
+            {title}
+          </span>
+        </div>
+      </div>
+    </div>
+    <picture class="block overflow-hidden  shadow-[0_16px_34px_rgba(0,0,0,0.16)] lg:shadow-[0_22px_60px_rgba(0,0,0,0.18)] ">
       <source srcset={beneficiosDesktop.src} media="(min-width: 640px)" />
       <Image
         src={beneficiosMobile}

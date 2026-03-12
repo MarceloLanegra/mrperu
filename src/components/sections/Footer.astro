@@ -9,7 +9,14 @@ import instagram from "../../assets/instagram.svg";
 import atlasLogoWhite from "../../assets/AtlasLogoWhite.png";
 
 const year = new Date().getFullYear();
-const whatsappLink = "https://api.whatsapp.com/send/?phone=51997580486&text&type=phone_number&app_absent=0";
+const whatsappMessage = encodeURIComponent(`¡Hola👋 gracias por escribirnos!
+Somos especialistas en venta, alquiler y mantenimiento de Compresores de Aire.
+Para ayudarnos con tu pronta atención, envíanos por favor:
+1️⃣ Nombre:
+2️⃣ Empresa:
+3️⃣ Tipo de producto o servicio que necesitas:
+En breve nuestro especialista te atenderá ⚙️`);
+const whatsappLink = `https://api.whatsapp.com/send/?phone=51997580486&text=${whatsappMessage}&type=phone_number&app_absent=0`;
 
 const firstNavList = [
     {
@@ -157,15 +164,98 @@ const secondNavList = [
 
 </footer>
 
-<a
-  href={whatsappLink}
-  target="_blank"
-  rel="noopener noreferrer"
-  aria-label="Escríbenos por WhatsApp"
-  class="fixed bottom-5 right-5 z-[90] inline-flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-[0_12px_28px_rgba(0,0,0,0.22)] transition hover:scale-105 hover:shadow-[0_16px_34px_rgba(0,0,0,0.26)] sm:bottom-6 sm:right-6 sm:h-16 sm:w-16"
->
-  <svg width="30" height="30" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-    <path fill="currentColor" d="M19.11 17.2c-.26-.13-1.52-.75-1.76-.83-.23-.09-.4-.13-.57.13-.17.26-.66.83-.8 1-.14.17-.29.2-.55.07-.26-.13-1.08-.4-2.06-1.27-.76-.68-1.27-1.52-1.42-1.78-.14-.26-.02-.4.11-.53.12-.12.26-.29.39-.43.13-.14.17-.23.26-.39.09-.17.04-.3-.02-.43-.07-.13-.57-1.38-.78-1.89-.21-.5-.42-.43-.57-.44h-.48c-.17 0-.43.07-.66.33-.23.26-.87.85-.87 2.06 0 1.2.89 2.37 1.01 2.53.13.17 1.75 2.67 4.25 3.74.59.26 1.05.42 1.41.54.59.19 1.13.16 1.56.1.48-.07 1.52-.62 1.74-1.21.22-.59.22-1.09.15-1.2-.06-.11-.23-.17-.49-.3Z"/>
-    <path fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" d="M16 .89C7.66.89.89 7.66.89 16c0 2.66.7 5.26 2.02 7.55L.98 31.11l7.75-1.87A15.03 15.03 0 0 0 16 31.11c8.34 0 15.11-6.77 15.11-15.11C31.11 7.66 24.34.89 16 .89Zm0 27.56c-2.33 0-4.62-.63-6.62-1.82l-.47-.28-4.6 1.11 1.12-4.49-.31-.46a12.34 12.34 0 0 1-1.9-6.51C3.22 9.01 9.01 3.22 16 3.22S28.78 9.01 28.78 16 22.99 28.45 16 28.45Zm6.78-9.28c-.37-.18-2.18-1.08-2.52-1.2-.34-.12-.59-.18-.84.18-.25.37-.96 1.2-1.18 1.45-.22.24-.43.27-.8.09-.37-.18-1.56-.58-2.98-1.85-1.1-.98-1.84-2.19-2.05-2.56-.21-.37-.02-.57.16-.75.16-.16.37-.43.55-.64.18-.21.24-.37.37-.61.12-.24.06-.46-.03-.64-.09-.18-.84-2.03-1.15-2.77-.3-.72-.61-.63-.84-.64l-.72-.01c-.24 0-.64.09-.97.46-.34.37-1.28 1.25-1.28 3.04 0 1.79 1.31 3.52 1.49 3.76.19.24 2.58 3.94 6.25 5.52.87.37 1.55.59 2.08.76.88.28 1.68.24 2.31.15.7-.1 2.18-.89 2.49-1.75.31-.86.31-1.6.22-1.75-.09-.15-.34-.24-.71-.43Z"/>
-  </svg>
-</a>
+<div class="fixed bottom-5 right-5 z-[90] flex flex-col items-end gap-3 sm:bottom-6 sm:right-6">
+  <div
+    id="whatsapp-popup"
+    class="pointer-events-none w-[min(92vw,350px)] translate-y-2 opacity-0 transition-all duration-300"
+    aria-hidden="true"
+  >
+    <div class="overflow-hidden rounded-[22px] bg-white shadow-[0_18px_40px_rgba(0,0,0,0.24)] ring-1 ring-black/5">
+      <div class="flex items-center justify-between bg-[#25D366] px-4 py-3 text-white">
+        <div class="flex items-center gap-2">
+          <svg width="22" height="22" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path fill="currentColor" d="M19.11 17.2c-.26-.13-1.52-.75-1.76-.83-.23-.09-.4-.13-.57.13-.17.26-.66.83-.8 1-.14.17-.29.2-.55.07-.26-.13-1.08-.4-2.06-1.27-.76-.68-1.27-1.52-1.42-1.78-.14-.26-.02-.4.11-.53.12-.12.26-.29.39-.43.13-.14.17-.23.26-.39.09-.17.04-.3-.02-.43-.07-.13-.57-1.38-.78-1.89-.21-.5-.42-.43-.57-.44h-.48c-.17 0-.43.07-.66.33-.23.26-.87.85-.87 2.06 0 1.2.89 2.37 1.01 2.53.13.17 1.75 2.67 4.25 3.74.59.26 1.05.42 1.41.54.59.19 1.13.16 1.56.1.48-.07 1.52-.62 1.74-1.21.22-.59.22-1.09.15-1.2-.06-.11-.23-.17-.49-.3Z"/>
+            <path fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" d="M16 .89C7.66.89.89 7.66.89 16c0 2.66.7 5.26 2.02 7.55L.98 31.11l7.75-1.87A15.03 15.03 0 0 0 16 31.11c8.34 0 15.11-6.77 15.11-15.11C31.11 7.66 24.34.89 16 .89Zm0 27.56c-2.33 0-4.62-.63-6.62-1.82l-.47-.28-4.6 1.11 1.12-4.49-.31-.46a12.34 12.34 0 0 1-1.9-6.51C3.22 9.01 9.01 3.22 16 3.22S28.78 9.01 28.78 16 22.99 28.45 16 28.45Zm6.78-9.28c-.37-.18-2.18-1.08-2.52-1.2-.34-.12-.59-.18-.84.18-.25.37-.96 1.2-1.18 1.45-.22.24-.43.27-.8.09-.37-.18-1.56-.58-2.98-1.85-1.1-.98-1.84-2.19-2.05-2.56-.21-.37-.02-.57.16-.75.16-.16.37-.43.55-.64.18-.21.24-.37.37-.61.12-.24.06-.46-.03-.64-.09-.18-.84-2.03-1.15-2.77-.3-.72-.61-.63-.84-.64l-.72-.01c-.24 0-.64.09-.97.46-.34.37-1.28 1.25-1.28 3.04 0 1.79 1.31 3.52 1.49 3.76.19.24 2.58 3.94 6.25 5.52.87.37 1.55.59 2.08.76.88.28 1.68.24 2.31.15.7-.1 2.18-.89 2.49-1.75.31-.86.31-1.6.22-1.75-.09-.15-.34-.24-.71-.43Z"/>
+          </svg>
+          <span class="text-sm font-semibold">WhatsApp</span>
+        </div>
+        <button
+          type="button"
+          id="whatsapp-popup-close"
+          class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-black/10 text-white transition hover:bg-black/20"
+          aria-label="Cerrar mensaje de WhatsApp"
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M6 6L18 18M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+
+      <div class="bg-[#f6f7f9] px-4 py-4">
+        <div class="relative rounded-[18px] bg-white px-4 py-4 text-[0.95rem] leading-6 text-slate-700 shadow-[0_8px_22px_rgba(0,0,0,0.10)]">
+          <span class="absolute -left-2 top-6 h-4 w-4 rotate-45 rounded-[3px] bg-white"></span>
+          <p class="whitespace-pre-line">
+¡Hola👋 gracias por escribirnos!
+Somos especialistas en venta, alquiler y mantenimiento de Compresores de Aire.
+Para ayudarnos con tu pronta atención, envíanos por favor:
+1️⃣ Nombre:
+2️⃣ Empresa:
+3️⃣ Tipo de producto o servicio que necesitas:
+En breve nuestro especialista te atenderá ⚙️
+          </p>
+        </div>
+
+        <a
+          href={whatsappLink}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="mt-4 inline-flex w-full items-center justify-center rounded-full bg-[#25D366] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#1fb85a]"
+        >
+          Abrir chat de WhatsApp
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <button
+    type="button"
+    id="whatsapp-floating-trigger"
+    aria-label="Abrir mensaje de WhatsApp"
+    class="inline-flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-[0_12px_28px_rgba(0,0,0,0.22)] transition hover:scale-105 hover:shadow-[0_16px_34px_rgba(0,0,0,0.26)] sm:h-16 sm:w-16"
+  >
+    <svg width="30" height="30" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path fill="currentColor" d="M19.11 17.2c-.26-.13-1.52-.75-1.76-.83-.23-.09-.4-.13-.57.13-.17.26-.66.83-.8 1-.14.17-.29.2-.55.07-.26-.13-1.08-.4-2.06-1.27-.76-.68-1.27-1.52-1.42-1.78-.14-.26-.02-.4.11-.53.12-.12.26-.29.39-.43.13-.14.17-.23.26-.39.09-.17.04-.3-.02-.43-.07-.13-.57-1.38-.78-1.89-.21-.5-.42-.43-.57-.44h-.48c-.17 0-.43.07-.66.33-.23.26-.87.85-.87 2.06 0 1.2.89 2.37 1.01 2.53.13.17 1.75 2.67 4.25 3.74.59.26 1.05.42 1.41.54.59.19 1.13.16 1.56.1.48-.07 1.52-.62 1.74-1.21.22-.59.22-1.09.15-1.2-.06-.11-.23-.17-.49-.3Z"/>
+      <path fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" d="M16 .89C7.66.89.89 7.66.89 16c0 2.66.7 5.26 2.02 7.55L.98 31.11l7.75-1.87A15.03 15.03 0 0 0 16 31.11c8.34 0 15.11-6.77 15.11-15.11C31.11 7.66 24.34.89 16 .89Zm0 27.56c-2.33 0-4.62-.63-6.62-1.82l-.47-.28-4.6 1.11 1.12-4.49-.31-.46a12.34 12.34 0 0 1-1.9-6.51C3.22 9.01 9.01 3.22 16 3.22S28.78 9.01 28.78 16 22.99 28.45 16 28.45Zm6.78-9.28c-.37-.18-2.18-1.08-2.52-1.2-.34-.12-.59-.18-.84.18-.25.37-.96 1.2-1.18 1.45-.22.24-.43.27-.8.09-.37-.18-1.56-.58-2.98-1.85-1.1-.98-1.84-2.19-2.05-2.56-.21-.37-.02-.57.16-.75.16-.16.37-.43.55-.64.18-.21.24-.37.37-.61.12-.24.06-.46-.03-.64-.09-.18-.84-2.03-1.15-2.77-.3-.72-.61-.63-.84-.64l-.72-.01c-.24 0-.64.09-.97.46-.34.37-1.28 1.25-1.28 3.04 0 1.79 1.31 3.52 1.49 3.76.19.24 2.58 3.94 6.25 5.52.87.37 1.55.59 2.08.76.88.28 1.68.24 2.31.15.7-.1 2.18-.89 2.49-1.75.31-.86.31-1.6.22-1.75-.09-.15-.34-.24-.71-.43Z"/>
+    </svg>
+  </button>
+</div>
+
+<script is:inline>
+  const whatsappTrigger = document.getElementById('whatsapp-floating-trigger');
+  const whatsappPopup = document.getElementById('whatsapp-popup');
+  const whatsappPopupClose = document.getElementById('whatsapp-popup-close');
+
+  const openWhatsappPopup = () => {
+    if (!whatsappPopup) return;
+    whatsappPopup.classList.remove('pointer-events-none', 'translate-y-2', 'opacity-0');
+    whatsappPopup.classList.add('pointer-events-auto', 'translate-y-0', 'opacity-100');
+    whatsappPopup.setAttribute('aria-hidden', 'false');
+  };
+
+  const closeWhatsappPopup = () => {
+    if (!whatsappPopup) return;
+    whatsappPopup.classList.add('pointer-events-none', 'translate-y-2', 'opacity-0');
+    whatsappPopup.classList.remove('pointer-events-auto', 'translate-y-0', 'opacity-100');
+    whatsappPopup.setAttribute('aria-hidden', 'true');
+  };
+
+  const toggleWhatsappPopup = () => {
+    if (!whatsappPopup) return;
+    const isHidden = whatsappPopup.getAttribute('aria-hidden') === 'true';
+    if (isHidden) openWhatsappPopup();
+    else closeWhatsappPopup();
+  };
+
+  whatsappTrigger?.addEventListener('click', toggleWhatsappPopup);
+  whatsappPopupClose?.addEventListener('click', closeWhatsappPopup);
+</script>
