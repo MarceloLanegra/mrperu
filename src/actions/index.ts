@@ -1,6 +1,6 @@
 import { ActionError, defineAction } from "astro:actions";
 import { FROM_EMAIL, RESEND_API_KEY, TO_EMAIL } from "astro:env/server";
-import { z } from "astro:schema";
+import { z } from "astro/zod";
 import { Resend } from "resend";
 
 const resend = new Resend(RESEND_API_KEY)
@@ -11,7 +11,7 @@ export const server = {
         input: z.object({
             fullName: z.string().min(5, 'Nombre y Apellido inválido'),
             company: z.string().min(1, 'Empresa inválida'),
-            email: z.string().email('Correo electrónico inválido'),
+            email: z.email('Correo electrónico inválido'),
             phone: z.string().min(7, 'Teléfono inválido')
         }),
         handler: async(fields) => {
