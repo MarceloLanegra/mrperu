@@ -43,18 +43,18 @@ const title = "TESTIMONIOS";
 
 <section id="testimonios" class=" py-8 sm:py-12 lg:py-14">
   <div class="mx-auto w-[min(1400px,calc(100%-16px))] sm:w-[min(1400px,calc(100%-24px))]">
-    <div class="relative mb-8 sm:mb-10">
+    <div class="relative mb-10 sm:mb-14 lg:mb-16">
       <div class="h-px w-full bg-slate-200"></div>
-      <div class="absolute left-1/2 top-0 z-10 w-[calc(100%-16px)] max-w-max -translate-x-1/2 -translate-y-1/2 sm:w-auto">
-        <div class="rounded-[12px] bg-white px-5 py-2 shadow-[0_10px_25px_rgba(0,0,0,0.18)] ring-1 ring-black/5 sm:rounded-[14px] sm:px-6">
-          <span class="text-blue-mrperu block text-balance font-extrabold tracking-wide text-[14px] leading-tight sm:text-[16px] lg:text-[22px]">
+      <div class="absolute left-1/2 top-0 z-10 w-[calc(100%-16px)] sm:w-auto sm:min-w-[520px] lg:min-w-[620px] -translate-x-1/2 -translate-y-1/2 mb-2">
+        <div class="rounded-[12px] bg-white px-4 py-2 sm:px-8 shadow-[0_10px_25px_rgba(0,0,0,0.18)] ring-1 ring-black/5 sm:rounded-[14px]">
+          <span class="text-blue-mrperu block text-center text-balance font-extrabold tracking-wide text-[14px] leading-tight sm:text-[16px] lg:text-[24px]">
             {title}
           </span>
         </div>
       </div>
     </div>
 
-    <div class="relative overflow-hidden py-8 sm:py-10 lg:py-12">
+    <div class="relative overflow-hidden py-8 sm:py-10 lg:py-12 mt-3 sm:mt-4 lg:mt-5">
       <div class="testimonios-stage-wrap">
         <button class="testimonios-arrow bg-yellow-mrperu testimonios-arrow-left" type="button" aria-label="Anterior">
           <span aria-hidden="true">‹</span>
@@ -209,19 +209,22 @@ const title = "TESTIMONIOS";
     top: 50%;
     transform: translateY(-50%);
     z-index: 10;
-    width: 42px;
-    height: 42px;
+    width: 40px;
+    height: 40px;
     padding: 0;
-    border: 0;
+    border: 1px solid rgba(11,88,113,.10);
     border-radius: 999px;
-    color: #fff;
-    font-size: 28px;
+    background: rgba(255,255,255,.92);
+    color: #0B5871;
+    box-shadow: 0 10px 24px rgba(0,0,0,.12);
+    font-size: 26px;
     line-height: 1;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    transition: transform .25s ease, box-shadow .25s ease, background .25s ease;
+    transition: transform .25s ease, color .25s ease, opacity .25s ease, background .25s ease, box-shadow .25s ease;
+    opacity: 1;
   }
 
   .testimonios-arrow > span{
@@ -240,6 +243,9 @@ const title = "TESTIMONIOS";
 
   .testimonios-arrow:hover{
     transform: translateY(-50%) scale(1.06);
+    background: #fff;
+    color: #0197C5;
+    box-shadow: 0 14px 28px rgba(0,0,0,.16);
   }
 
   .testimonios-arrow-left{
@@ -468,9 +474,9 @@ const title = "TESTIMONIOS";
     }
 
     .testimonios-arrow{
-      width: 36px;
-      height: 36px;
-      font-size: 24px;
+      width: 34px;
+      height: 34px;
+      font-size: 22px;
     }
 
     .testimonios-arrow-left{

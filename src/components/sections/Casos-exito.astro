@@ -5,52 +5,33 @@ const title = "CASOS DE ÉXITO";
 const videos = [
   {
     id: "caso-1",
-    label: "MR Chincha Arándanos",
-    src: "/casos-exito/MR-CHINCHA-ARANDANOS-30seg.mp4",
-    poster: "/thumbs/MR-CHINCHA-ARANDANOS-30seg.jpg",
-
+    label: "Planta de arándanos",
+    src: "/casos-exito/1.planta-de-arandanos.mp4",
+    poster: "/thumbs/casos-exito/1.planta-de-arandanos.jpg",
   },
   {
     id: "caso-2",
-    label: "MR Chincha Frescos",
-    src: "/casos-exito/MR-CHINCHA-FRESCOS-30seg.mp4",
-    poster: "/thumbs/MR-CHINCHA-FRESCOS-30seg.jpg",
+    label: "Arranque inicial de un compresor GA-30-VSDs",
+    src: "/casos-exito/2.Arranque-inicial-de-un-compresor-GA-30-VSDs.mp4",
+    poster: "/thumbs/casos-exito/2.Arranque-inicial-de-un-compresor-GA-30-VSDs.jpg",
   },
   {
     id: "caso-3",
-    label: "Planta generadora de oxígeno",
-    src: "/casos-exito/Planta-Generadora-de-Oxigeno-compresor-Atlas-Copco.mp4",
-    poster: "/thumbs/Planta-Generadora-de-Oxigeno-compresor-Atlas-Copco.jpg",
+    label: "VSDs en plena acción en planta procesadora de granos",
+    src: "/casos-exito/3.VSDs-en-plena-accion-en-planta-procesadora-de-granos.mp4",
+    poster: "/thumbs/casos-exito/3.VSDs-en-plena-accion-en-planta-procesadora-de-granos.jpg",
   },
   {
     id: "caso-4",
-    label: "Instalación VSD en supermercados peruanos Punta Negra",
-    src: "/casos-exito/INSTALACION-VSD-EN-SUPERMERCADOS-PERUANOS-PUNTA-NEGRA.mp4",
-    poster: "/thumbs/INSTALACION-VSD-EN-SUPERMERCADOS-PERUANOS-PUNTA-NEGRA.jpg",
+    label: "Planta OSLO Punta Negra",
+    src: "/casos-exito/4.Planta-OSLO-Punta-Negra.mp4",
+    poster: "/thumbs/casos-exito/4.Planta-OSLO-Punta-Negra.jpg",
   },
   {
     id: "caso-5",
-    label: "Compresor VSD en plata de fabricacion de techos",
-    src: "/casos-exito/Compresor-VSD-en-planta-de-fabricacion-de-techos.mp4",
-    poster: "/thumbs/Compresor-VSD-en-planta-de-fabricacion-de-techos.jpg",
-  },
-  {
-    id: "caso-6",
-    label: "Mantenimiento Compresor GA 90",
-    src: "/casos-exito/mantenimiento-compresor-GA-90.mp4",
-    poster: "/thumbs/mantenimiento-compresor-GA-90.jpg",
-  },
-  {
-    id: "caso-7",
-    label: "Secadores vendidos en mecanoplast",
-    src: "/casos-exito/SECADORES-VENDIDOS-EN-MECANOPLAST.mp4",
-    poster: "/thumbs/SECADORES-VENDIDOS-EN-MECANOPLAST.jpg",
-  },
-  {
-    id: "caso-8",
-    label: "VSD NUEVA INSTALACION",
-    src: "/casos-exito/VSDnuevainstalacion.mp4",
-    poster: "/thumbs/VSDnuevainstalacion.jpg",
+    label: "Compresor VSD en planta de fabricación de techos",
+    src: "/casos-exito/5.Compresor-VSD-en-planta-de-fabricacion-de-techos.mp4",
+    poster: "/thumbs/casos-exito/5.Compresor-VSD-en-planta-de-fabricacion-de-techos.jpg",
   },
 ];
 
@@ -62,11 +43,11 @@ const list = videos.slice(1);
 <section id="casos-de-exito" class="bg-white py-8 sm:py-12 lg:py-14 scroll-mt-24">
   <div class="mx-auto w-[min(1400px,calc(100%-16px))] sm:w-[min(1400px,calc(100%-24px))]">
     <!-- Pill título -->
-    <div class="relative mb-5 sm:mb-8 lg:mb-10">
+    <div class="relative mb-10 sm:mb-14 lg:mb-16">
       <div class="h-px w-full bg-slate-200"></div>
-      <div class="absolute left-1/2 top-0 z-10 w-[calc(100%-16px)] max-w-max -translate-x-1/2 -translate-y-1/2 sm:w-auto">
-        <div class="rounded-[12px] bg-white px-3 py-2 shadow-[0_10px_25px_rgba(0,0,0,0.18)] ring-1 ring-black/5 sm:rounded-[14px] sm:px-6">
-          <span class="text-blue-mrperu block text-balance font-extrabold tracking-wide text-[12px] leading-tight sm:text-[14px] lg:text-[22px]">
+      <div class="absolute left-1/2 top-0 z-10 w-[calc(100%-16px)] sm:w-auto sm:min-w-[520px] lg:min-w-[420px] -translate-x-1/2 -translate-y-1/2 mb-2">
+        <div class="rounded-[12px] bg-white px-4 py-2 sm:px-8 shadow-[0_10px_25px_rgba(0,0,0,0.18)] ring-1 ring-black/5 sm:rounded-[14px]">
+          <span class="text-blue-mrperu block text-center text-balance font-extrabold tracking-wide text-[14px] leading-tight sm:text-[16px] lg:text-[24px]">
             {title}
           </span>
         </div>
@@ -74,7 +55,7 @@ const list = videos.slice(1);
     </div>
 
     <!-- Layout: grande + listado de videos -->
-    <div class="grid gap-4 sm:gap-5 lg:gap-6 md:grid-cols-[1.35fr_0.65fr] md:items-start">
+    <div class="grid gap-4 sm:gap-5 lg:gap-6 mt-3 sm:mt-4 lg:mt-5 md:grid-cols-[1.35fr_0.65fr] md:items-start">
       <!-- Player grande -->
       <div class="overflow-hidden rounded-[16px] bg-white shadow-[0_14px_28px_rgba(0,0,0,0.14)] sm:rounded-[20px] sm:shadow-[0_16px_34px_rgba(0,0,0,0.16)] lg:rounded-[22px] lg:shadow-[0_22px_60px_rgba(0,0,0,0.22)]">
         <video
@@ -92,11 +73,11 @@ const list = videos.slice(1);
       </div>
 
       <!-- Lista lateral / carrusel en mobile -->
-      <div class="flex gap-4 overflow-x-auto bg-transparent pb-2 md:grid md:max-h-[540px] md:grid-cols-1 md:gap-4 md:overflow-y-auto md:overflow-x-hidden md:pb-0 pr-1">
+      <div class="casos-scroll flex gap-4 overflow-x-auto bg-transparent pb-2 pr-1 md:grid md:max-h-[540px] md:grid-cols-1 md:gap-4 md:overflow-y-auto md:overflow-x-hidden md:pb-0">
         {list.map((t) => (
           <button
             type="button"
-            class="casos-thumb group relative min-w-[260px] overflow-hidden rounded-[14px] bg-white text-left shadow-[0_12px_24px_rgba(0,0,0,0.14)] transition hover:-translate-y-0.5 hover:shadow-[0_16px_32px_rgba(0,0,0,0.16)] focus:outline-none focus:ring-2 sm:min-w-[300px] sm:rounded-[18px] sm:shadow-[0_14px_34px_rgba(0,0,0,0.16)] md:min-w-0"
+            class="casos-thumb group relative min-w-[260px] overflow-hidden rounded-[14px] bg-white text-left shadow-[0_12px_24px_rgba(0,0,0,0.14)] transition hover:-translate-y-0.5 hover:shadow-[0_16px_32px_rgba(0,0,0,0.16)] focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0 sm:min-w-[300px] sm:rounded-[18px] sm:shadow-[0_14px_34px_rgba(0,0,0,0.16)] md:min-w-0"
             data-video-src={t.src}
             data-video-poster={t.poster}
             aria-label={`Ver ${t.label}`}
@@ -131,6 +112,49 @@ const list = videos.slice(1);
   if (mainVideo && mainSource) {
     const buttons = document.querySelectorAll(".casos-thumb[data-video-src][data-video-poster]");
 
+    const scrollArea = document.querySelector(".casos-scroll");
+
+    if (scrollArea) {
+      let isDown = false;
+      let startX = 0;
+      let startY = 0;
+      let scrollLeft = 0;
+      let scrollTop = 0;
+
+      const onPointerDown = (event) => {
+        isDown = true;
+        scrollArea.classList.add("is-dragging");
+        startX = event.pageX;
+        startY = event.pageY;
+        scrollLeft = scrollArea.scrollLeft;
+        scrollTop = scrollArea.scrollTop;
+      };
+
+      const onPointerMove = (event) => {
+        if (!isDown) return;
+        event.preventDefault();
+
+        const walkX = event.pageX - startX;
+        const walkY = event.pageY - startY;
+
+        if (window.innerWidth >= 768) {
+          scrollArea.scrollTop = scrollTop - walkY;
+        } else {
+          scrollArea.scrollLeft = scrollLeft - walkX;
+        }
+      };
+
+      const stopDragging = () => {
+        isDown = false;
+        scrollArea.classList.remove("is-dragging");
+      };
+
+      scrollArea.addEventListener("mousedown", onPointerDown);
+      scrollArea.addEventListener("mousemove", onPointerMove);
+      scrollArea.addEventListener("mouseleave", stopDragging);
+      window.addEventListener("mouseup", stopDragging);
+    }
+
     buttons.forEach((btn, index) => {
       btn.addEventListener("click", () => {
         const src = btn.getAttribute("data-video-src");
@@ -147,3 +171,18 @@ const list = videos.slice(1);
     });
   }
 </script>
+<style>
+  .casos-scroll {
+    cursor: grab;
+    scrollbar-width: thin;
+  }
+
+  .casos-scroll.is-dragging {
+    cursor: grabbing;
+    user-select: none;
+  }
+
+  .casos-scroll.is-dragging * {
+    user-select: none;
+  }
+</style>

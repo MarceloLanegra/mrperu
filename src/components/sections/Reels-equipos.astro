@@ -52,23 +52,32 @@ const reels = [
 <section id="equipos" class="bg-white py-12 sm:pb-16">
   <div class="mx-auto w-[min(1400px,calc(100%-24px))]">
     <!-- pill title -->
-    <div class="relative mb-8 sm:mb-10">
+    <div class="relative mb-10 sm:mb-14 lg:mb-16">
       <div class="h-px w-full bg-slate-200"></div>
-      <div class="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2">
-        <div class="rounded-[14px] bg-white px-6 py-2 shadow-[0_10px_25px_rgba(0,0,0,0.18)] ring-1 ring-black/5">
-          <span class="text-blue-mrperu block text-balance font-extrabold text-center tracking-wide text-[12px] leading-tight sm:text-[14px] lg:text-[22px]">
+      <div class="absolute left-1/2 top-0 z-10 w-[calc(100%-16px)] sm:w-auto sm:min-w-[520px] lg:min-w-[620px] -translate-x-1/2 -translate-y-1/2 mb-2">
+        <div class="rounded-[12px] bg-white px-4 py-2 sm:px-8 shadow-[0_10px_25px_rgba(0,0,0,0.18)] ring-1 ring-black/5 sm:rounded-[14px]">
+          <span class="text-blue-mrperu block text-center text-balance font-extrabold tracking-wide text-[14px] leading-tight sm:text-[16px] lg:text-[24px]">
             {title}
           </span>
         </div>
       </div>
     </div>
 
-    <div class="relative">
+    <div class="relative mt-3 sm:mt-4 lg:mt-5">
+      <button type="button" class="reels-arrow reels-arrow-left" aria-label="Reel anterior">
+        <span aria-hidden="true">‹</span>
+      </button>
+
+      <button type="button" class="reels-arrow reels-arrow-right" aria-label="Reel siguiente">
+        <span aria-hidden="true">›</span>
+      </button>
+
       <div id="reelsTrack" class="reels-track">
         {reels.map((r, i) => (
           <button
             type="button"
             class={`reel-card ${i === 0 ? "is-active" : ""}`}
+            data-reel-index={i}
             data-src={r.src}
             data-poster={r.poster}
             aria-label={`Abrir reel ${i + 1}`}
@@ -117,7 +126,7 @@ const reels = [
     display:flex;
     gap:22px;
     overflow-x:auto;
-    padding: 10px 6px 18px;
+    padding: 10px 44px 18px;
     scroll-snap-type: x mandatory;
     scroll-behavior:smooth;
     scrollbar-width:none;
@@ -129,6 +138,7 @@ const reels = [
     position:relative;
     flex: 0 0 auto;
     scroll-snap-align:start;
+    scroll-snap-stop: always;
 
     width: 260px;
     height: 460px;
@@ -186,9 +196,54 @@ const reels = [
   .reel-caption strong{ display:block; font-weight:900; font-size:14px; }
   .reel-caption small{ display:block; font-size:11px; opacity:.95; }
 
+  .reels-arrow{
+    position:absolute;
+    top:50%;
+    z-index:3;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    width:40px;
+    height:40px;
+    padding:0;
+    border:1px solid rgba(11,88,113,.10);
+    border-radius:999px;
+    background:rgba(255,255,255,.92);
+    color:#0B5871;
+    box-shadow:0 10px 24px rgba(0,0,0,.12);
+    cursor:pointer;
+    transform:translateY(-50%);
+    transition:transform .25s ease, color .25s ease, opacity .25s ease, background .25s ease, box-shadow .25s ease;
+    opacity:1;
+  }
+
+  .reels-arrow:hover{
+    transform:translateY(-50%) scale(1.06);
+    background:#fff;
+    color:#0197C5;
+    box-shadow:0 14px 28px rgba(0,0,0,.16);
+  }
+
+  .reels-arrow > span{
+    display:block;
+    font-size:26px;
+    font-weight:700;
+    line-height:1;
+    text-shadow:none;
+    transform:translateY(-1px);
+  }
+
+  .reels-arrow-left{ left:8px; }
+  .reels-arrow-right{ right:8px; }
+
   @media (max-width: 640px){
     .reel-card{ width: 220px; height: 390px; }
     .reel-play{ width: 58px; height: 58px; }
+    .reels-track{ padding: 10px 34px 18px; }
+    .reels-arrow{ width:34px; height:34px; }
+    .reels-arrow > span{ font-size:22px; }
+    .reels-arrow-left{ left:2px; }
+    .reels-arrow-right{ right:2px; }
   }
 
   /* === Modal === */
@@ -255,7 +310,8 @@ const reels = [
     });
 
     if (!best) best = cards[0];
-    cards.forEach((c) => c.classList.toggle("is-active", c === best));
+    const activeIndex = best?.getAttribute("data-reel-index");
+    cards.forEach((c) => c.classList.toggle("is-active", c.getAttribute("data-reel-index") === activeIndex));
   };
 
   let raf = null;
@@ -263,14 +319,86 @@ const reels = [
     if (raf) return;
     raf = requestAnimationFrame(() => {
       raf = null;
+      normalizeInfiniteScroll();
       setActive();
     });
   };
 
+  const dots = [...document.querySelectorAll(".reels-dot[data-reel-dot]")];
+  const prevArrow = document.querySelector(".reels-arrow-left");
+  const nextArrow = document.querySelector(".reels-arrow-right");
+
+  let loopReady = false;
+  let loopSegmentWidth = 0;
+  let loopResetting = false;
+
+  const setupInfiniteLoop = () => {
+    if (!track || loopReady) return;
+
+    const originals = [...track.querySelectorAll('.reel-card:not([data-clone])')];
+    if (!originals.length) return;
+
+    const beforeFragment = document.createDocumentFragment();
+    const afterFragment = document.createDocumentFragment();
+
+    originals.forEach((card) => {
+      const beforeClone = card.cloneNode(true);
+      beforeClone.classList.remove('is-active');
+      beforeClone.setAttribute('data-clone', 'before');
+      beforeFragment.appendChild(beforeClone);
+
+      const afterClone = card.cloneNode(true);
+      afterClone.classList.remove('is-active');
+      afterClone.setAttribute('data-clone', 'after');
+      afterFragment.appendChild(afterClone);
+    });
+
+    track.prepend(beforeFragment);
+    track.append(afterFragment);
+
+    const firstOriginal = track.querySelector('.reel-card[data-reel-index="0"]:not([data-clone])');
+    const firstAfterClone = track.querySelector('.reel-card[data-reel-index="0"][data-clone="after"]');
+
+    if (!firstOriginal || !firstAfterClone) return;
+
+    loopSegmentWidth = firstAfterClone.offsetLeft - firstOriginal.offsetLeft;
+    track.scrollLeft = firstOriginal.offsetLeft;
+    loopReady = true;
+  };
+
+  const normalizeInfiniteScroll = () => {
+    if (!track || !loopReady || !loopSegmentWidth || loopResetting) return;
+
+    const firstOriginal = track.querySelector('.reel-card[data-reel-index="0"]:not([data-clone])');
+    const firstAfterClone = track.querySelector('.reel-card[data-reel-index="0"][data-clone="after"]');
+    if (!firstOriginal || !firstAfterClone) return;
+
+    const minEdge = firstOriginal.offsetLeft - 12;
+    const maxEdge = firstAfterClone.offsetLeft - 12;
+
+    if (track.scrollLeft <= minEdge) {
+      loopResetting = true;
+      track.scrollLeft += loopSegmentWidth;
+      loopResetting = false;
+    } else if (track.scrollLeft >= maxEdge) {
+      loopResetting = true;
+      track.scrollLeft -= loopSegmentWidth;
+      loopResetting = false;
+    }
+  };
+
   if (track) {
+    setupInfiniteLoop();
     setActive();
     track.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", setActive);
+    window.addEventListener("resize", () => {
+      loopReady = false;
+      loopSegmentWidth = 0;
+      const clones = track.querySelectorAll('.reel-card[data-clone]');
+      clones.forEach((clone) => clone.remove());
+      setupInfiniteLoop();
+      setActive();
+    });
   }
 
   // --- Modal open/close ---
@@ -294,14 +422,58 @@ const reels = [
     document.body.style.overflow = "";
   };
 
-  document.querySelectorAll("#reelsTrack .reel-card").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const src = btn.getAttribute("data-src");
-      const poster = btn.getAttribute("data-poster");
-      if (src) openModal(src, poster);
-    });
+  document.addEventListener("click", (event) => {
+    const btn = event.target.closest("#reelsTrack .reel-card");
+    if (!btn) return;
+
+    const src = btn.getAttribute("data-src");
+    const poster = btn.getAttribute("data-poster");
+    if (src) openModal(src, poster);
   });
 
   document.querySelectorAll("[data-close]").forEach((el) => el.addEventListener("click", closeModal));
   document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeModal(); });
+
+  dots.forEach((dot, index) => {
+    dot.addEventListener("click", () => {
+      const cards = [...document.querySelectorAll("#reelsTrack .reel-card")];
+      const target = cards[index];
+      if (!target) return;
+
+      target.scrollIntoView({
+        behavior: "smooth",
+        inline: "start",
+        block: "nearest",
+      });
+
+      window.setTimeout(() => {
+        setActive();
+      }, 250);
+    });
+  });
+
+  const scrollToCard = (direction) => {
+    if (!track) return;
+
+    const firstCard = track.querySelector('.reel-card');
+    if (!firstCard) return;
+
+    const cardStyles = window.getComputedStyle(firstCard);
+    const cardWidth = firstCard.getBoundingClientRect().width;
+    const gap = parseFloat(cardStyles.marginRight || '0') || 22;
+    const step = cardWidth + gap;
+
+    track.scrollBy({
+      left: direction * step,
+      behavior: 'smooth',
+    });
+
+    window.setTimeout(() => {
+      normalizeInfiniteScroll();
+      setActive();
+    }, 280);
+  };
+
+  prevArrow?.addEventListener("click", () => scrollToCard(-1));
+  nextArrow?.addEventListener("click", () => scrollToCard(1));
 </script>

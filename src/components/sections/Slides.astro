@@ -1,31 +1,31 @@
 ---
 import { Image } from "astro:assets";
 
-import bgSlide1Lg from "../../assets/slides/bg-slide1-lg.webp";
-import bgSlide1Xs from "../../assets/slides/bg-slide-1-xs.webp";
-import bgSlide2Lg from "../../assets/slides/bg-slide2-lg.webp";
-import bgSlide2Xs from "../../assets/slides/bg-slide-2-xs.webp";
-import bgSlide3Lg from "../../assets/slides/bg-slide3-lg.webp";
-import bgSlide3Xs from "../../assets/slides/bg-slide-3-xs.webp";
+import bgSlide1Lg from "../../assets/slides/banner-1.jpg";
+import bgSlide1Xs from "../../assets/slides/slide1-xs.webp";
+import bgSlide2Lg from "../../assets/slides/bg-slide2.jpg";
+import bgSlide2Xs from "../../assets/slides/slide2-xs.webp";
+import bgSlide3Lg from "../../assets/slides/banner-3.jpg";
+import bgSlide3Xs from "../../assets/slides/slide3-xs.webp";
 
 const slides = [
   {
     id: "slide-1",
-    href: "#slide-1",
+    href: "#contacto",
     desktop: bgSlide1Lg,
     mobile: bgSlide1Xs,
     alt: "Slide 1 MR Perú",
   },
   {
     id: "slide-2",
-    href: "#slide-2",
+    href: "https://wa.me/51997580486",
     desktop: bgSlide2Lg,
     mobile: bgSlide2Xs,
     alt: "Slide 2 MR Perú",
   },
   {
     id: "slide-3",
-    href: "#slide-3",
+    href: "#video-smartlink",
     desktop: bgSlide3Lg,
     mobile: bgSlide3Xs,
     alt: "Slide 3 MR Perú",
@@ -42,6 +42,8 @@ const slides = [
           class:list={["slide-item", index === 0 && "is-active"]}
           data-slide={index}
           aria-label={`Ir al slide ${index + 1}`}
+          target={slide.href.startsWith("http") ? "_blank" : undefined}
+          rel={slide.href.startsWith("http") ? "noopener noreferrer" : undefined}
         >
           <Image
             src={slide.desktop}
@@ -178,7 +180,7 @@ const slides = [
   .slides-track{
     position: relative;
     width: 100%;
-    height: 100%;
+    height: auto;
   }
 
   .slide-item{
@@ -221,34 +223,35 @@ const slides = [
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 44px;
-    height: 44px;
+    width: 56px;
+    height: 56px;
     padding: 0;
     border: 0;
-    border-radius: 999px;
-    background: rgba(255,255,255,.92);
-    color: #0b5871;
-    box-shadow: 0 10px 24px rgba(0,0,0,.16);
+    background: transparent;
+    color: #f5b400;
     cursor: pointer;
     transform: translateY(-50%);
-    transition: transform .25s ease, box-shadow .25s ease, background .25s ease;
+    transition: transform .25s ease, color .25s ease, opacity .25s ease;
+    opacity: .95;
   }
 
   .slides-arrow:hover{
-    transform: translateY(-50%) scale(1.06);
-    box-shadow: 0 14px 28px rgba(0,0,0,.2);
-    background: #fff;
+    transform: translateY(-50%) scale(1.12);
+    color: #ffd24d;
+    opacity: 1;
   }
 
   .slides-arrow > span{
     display: block;
-    font-size: 30px;
-    line-height: 1;
-    transform: translateY(-1px);
+    font-size: 64px;
+    font-weight: 700;
+    line-height: .8;
+    text-shadow: 0 6px 18px rgba(0,0,0,.28);
+    transform: translateY(-2px);
   }
 
   .slides-arrow-left{
-    left: 16px;
+    left: 20px;
   }
 
   .slides-arrow-left > span{
@@ -256,7 +259,7 @@ const slides = [
   }
 
   .slides-arrow-right{
-    right: 16px;
+    right: 20px;
   }
 
   .slides-arrow-right > span{
@@ -305,16 +308,20 @@ const slides = [
     }
 
     .slides-arrow{
-      width: 38px;
-      height: 38px;
+      width: 44px;
+      height: 44px;
+    }
+
+    .slides-arrow > span{
+      font-size: 52px;
     }
 
     .slides-arrow-left{
-      left: 10px;
+      left: 8px;
     }
 
     .slides-arrow-right{
-      right: 10px;
+      right: 8px;
     }
 
     .slides-dots{
