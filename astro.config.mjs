@@ -3,12 +3,12 @@ import { defineConfig, envField } from 'astro/config';
 
 import tailwindcss from '@tailwindcss/vite';
 
-import vercel from '@astrojs/vercel';
+import vercel from '@astrojs/vercel/serverless';
 
 // https://astro.build/config
 export default defineConfig({
-  output:'server',
-  adapter:vercel(),
+  output: 'server',
+  adapter: vercel(),
   env: {
     schema: {
       RESEND_API_KEY: envField.string({
