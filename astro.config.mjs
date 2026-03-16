@@ -7,6 +7,7 @@ import vercel from '@astrojs/vercel';
 
 // https://astro.build/config
 export default defineConfig({
+  output: 'server',
   env: {
     schema: {
       RESEND_API_KEY: envField.string({
