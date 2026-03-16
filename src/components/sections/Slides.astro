@@ -1,11 +1,11 @@
 ---
 import { Image } from "astro:assets";
 
-import bgSlide1Lg from "../../assets/slides/banner-1.jpg";
+import bgSlide1Lg from "../../assets/slides/bg-banner.jpg";
 import bgSlide1Xs from "../../assets/slides/slide1-xs.webp";
-import bgSlide2Lg from "../../assets/slides/bg-slide2.jpg";
+import bgSlide2Lg from "../../assets/slides/bg-banner2.jpg";
 import bgSlide2Xs from "../../assets/slides/slide2-xs.webp";
-import bgSlide3Lg from "../../assets/slides/banner-3.jpg";
+import bgSlide3Lg from "../../assets/slides/bg-banner3.jpg";
 import bgSlide3Xs from "../../assets/slides/slide3-xs.webp";
 
 const slides = [
@@ -35,13 +35,18 @@ const slides = [
 
 <section class="slides-section relative w-full overflow-hidden bg-white" aria-label="Slider principal">
   <div class="slides-shell relative w-full">
-    <div class="slides-track" data-slides-track>
+    <div class="slides-track" data-slides-track aria-live="polite">
       {slides.map((slide, index) => (
         <a
           href={slide.href}
-          class:list={["slide-item", index === 0 && "is-active"]}
+          class:list={[
+            "slide-item",
+            index === 0 && "is-active",
+            index === 0 && "is-current",
+          ]}
           data-slide={index}
           aria-label={`Ir al slide ${index + 1}`}
+          aria-hidden={index === 0 ? "false" : "true"}
           target={slide.href.startsWith("http") ? "_blank" : undefined}
           rel={slide.href.startsWith("http") ? "noopener noreferrer" : undefined}
         >
@@ -109,15 +114,105 @@ const slides = [
 
     let activeIndex = 0;
     let intervalId;
+    let isAnimating = false;
 
-    const updateSlider = () => {
-      slides.forEach((slide, index) => {
-        slide.classList.toggle('is-active', index === activeIndex);
-      });
+    const track = section.querySelector('[data-slides-track]');
 
+    const getActiveMedia = () => {
+      const activeSlide = slides[activeIndex];
+      if (!activeSlide) return null;
+
+      const isMobile = window.matchMedia('(max-width: 767px)').matches;
+      return activeSlide.querySelector(
+        isMobile ? '.slide-media-mobile' : '.slide-media-desktop'
+      );
+    };
+
+    const updateTrackHeight = () => {
+      if (!track) return;
+
+      const activeMedia = getActiveMedia();
+      if (!activeMedia) return;
+
+      const applyHeight = () => {
+        const mediaHeight = activeMedia.getBoundingClientRect().height;
+        if (mediaHeight > 0) {
+          track.style.height = `${Math.ceil(mediaHeight)}px`;
+        }
+      };
+
+      if (activeMedia.complete) {
+        applyHeight();
+      } else {
+        activeMedia.addEventListener('load', applyHeight, { once: true });
+      }
+    };
+
+    const updateDots = () => {
       dots.forEach((dot, index) => {
         dot.classList.toggle('is-active', index === activeIndex);
       });
+    };
+
+    const setA11yState = () => {
+      slides.forEach((slide, index) => {
+        const isActive = index === activeIndex;
+        slide.setAttribute('aria-hidden', isActive ? 'false' : 'true');
+        slide.tabIndex = isActive ? 0 : -1;
+      });
+    };
+
+    const finishAnimation = (incomingSlide, outgoingSlide) => {
+      outgoingSlide.classList.remove(
+        'is-current',
+        'is-active',
+        'is-exiting-left',
+        'is-exiting-right'
+      );
+
+      incomingSlide.classList.remove('is-entering-left', 'is-entering-right');
+      incomingSlide.classList.add('is-active', 'is-current');
+
+      isAnimating = false;
+      updateDots();
+      setA11yState();
+      updateTrackHeight();
+    };
+
+    const animateTo = (nextIndex, direction) => {
+      if (isAnimating || nextIndex === activeIndex) return;
+
+      const outgoingSlide = slides[activeIndex];
+      const incomingSlide = slides[nextIndex];
+
+      isAnimating = true;
+      activeIndex = nextIndex;
+
+      slides.forEach((slide) => {
+        slide.classList.remove(
+          'is-entering-left',
+          'is-entering-right',
+          'is-exiting-left',
+          'is-exiting-right'
+        );
+      });
+
+      incomingSlide.classList.add('is-active');
+      incomingSlide.classList.add(
+        direction === 'next' ? 'is-entering-right' : 'is-entering-left'
+      );
+      outgoingSlide.classList.add(
+        direction === 'next' ? 'is-exiting-left' : 'is-exiting-right'
+      );
+
+      requestAnimationFrame(() => {
+        incomingSlide.classList.add('is-current');
+        incomingSlide.classList.remove('is-entering-left', 'is-entering-right');
+      });
+
+      window.setTimeout(() => {
+        finishAnimation(incomingSlide, outgoingSlide);
+      }, 520);
     };
 
     const stopAutoplay = () => {
@@ -127,31 +222,38 @@ const slides = [
     const startAutoplay = () => {
       stopAutoplay();
       intervalId = window.setInterval(() => {
-        activeIndex = (activeIndex + 1) % slides.length;
-        updateSlider();
+        const nextIndex = (activeIndex + 1) % slides.length;
+        animateTo(nextIndex, 'next');
       }, 5000);
     };
 
     const goTo = (index) => {
-      activeIndex = index;
-      updateSlider();
+      if (index === activeIndex) return;
+      const direction = index > activeIndex ? 'next' : 'prev';
+      animateTo(index, direction);
       startAutoplay();
     };
 
-    const goPrev = () => {
-      activeIndex = (activeIndex - 1 + slides.length) % slides.length;
-      updateSlider();
+    const goPrev = (event) => {
+      event?.preventDefault();
+      event?.stopPropagation();
+      const nextIndex = (activeIndex - 1 + slides.length) % slides.length;
+      animateTo(nextIndex, 'prev');
       startAutoplay();
     };
 
-    const goNext = () => {
-      activeIndex = (activeIndex + 1) % slides.length;
-      updateSlider();
+    const goNext = (event) => {
+      event?.preventDefault();
+      event?.stopPropagation();
+      const nextIndex = (activeIndex + 1) % slides.length;
+      animateTo(nextIndex, 'next');
       startAutoplay();
     };
 
     prevButton?.addEventListener('click', goPrev);
     nextButton?.addEventListener('click', goNext);
+    prevButton?.addEventListener('pointerup', goPrev);
+    nextButton?.addEventListener('pointerup', goNext);
 
     dots.forEach((dot, index) => {
       dot.addEventListener('click', () => goTo(index));
@@ -162,8 +264,17 @@ const slides = [
     section.addEventListener('focusin', stopAutoplay);
     section.addEventListener('focusout', startAutoplay);
 
-    updateSlider();
+    const handleResize = () => {
+      updateTrackHeight();
+    };
+
+    updateDots();
+    setA11yState();
+    updateTrackHeight();
     startAutoplay();
+
+    window.addEventListener('resize', handleResize);
+    window.addEventListener('load', handleResize, { once: true });
   });
 </script>
 
@@ -175,12 +286,15 @@ const slides = [
   .slides-shell{
     position: relative;
     width: 100%;
+    isolation: isolate;
   }
 
   .slides-track{
     position: relative;
     width: 100%;
+    overflow: hidden;
     height: auto;
+    transition: height .45s ease;
   }
 
   .slide-item{
@@ -188,17 +302,54 @@ const slides = [
     inset: 0;
     display: block;
     width: 100%;
-    height: 100%;
+    height: auto;
     opacity: 0;
     pointer-events: none;
-    transition: opacity .45s ease;
+    transform: translate3d(0, 0, 0);
+    transition:
+      opacity .5s ease,
+      transform .5s cubic-bezier(.22,.61,.36,1);
+    will-change: transform, opacity;
   }
 
   .slide-item.is-active{
-    position: relative;
     opacity: 1;
-    pointer-events: auto;
     z-index: 1;
+  }
+
+  .slide-item.is-current{
+    pointer-events: auto;
+    z-index: 2;
+  }
+
+  .slide-item.is-entering-right,
+  .slide-item.is-exiting-left{
+    transform: translate3d(0, 0, 0);
+  }
+
+  .slide-item.is-entering-right{
+    opacity: 1;
+    transform: translate3d(6%, 0, 0);
+  }
+
+  .slide-item.is-exiting-left{
+    opacity: 0;
+    transform: translate3d(-4%, 0, 0);
+  }
+
+  .slide-item.is-entering-left,
+  .slide-item.is-exiting-right{
+    transform: translate3d(0, 0, 0);
+  }
+
+  .slide-item.is-entering-left{
+    opacity: 1;
+    transform: translate3d(-6%, 0, 0);
+  }
+
+  .slide-item.is-exiting-right{
+    opacity: 0;
+    transform: translate3d(4%, 0, 0);
   }
 
   .slide-media{
@@ -206,25 +357,32 @@ const slides = [
     width: 100%;
     height: 100%;
     object-fit: cover;
+    user-select: none;
   }
 
   .slide-media-desktop{
     display: block;
+    width: 100%;
+    height: auto;
+    object-fit: contain;
   }
 
   .slide-media-mobile{
     display: none;
+    width: 100%;
+    height: auto;
+    object-fit: contain;
   }
 
   .slides-arrow{
     position: absolute;
     top: 50%;
-    z-index: 3;
+    z-index: 20;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 56px;
-    height: 56px;
+    width: 64px;
+    height: 64px;
     padding: 0;
     border: 0;
     background: transparent;
@@ -233,6 +391,9 @@ const slides = [
     transform: translateY(-50%);
     transition: transform .25s ease, color .25s ease, opacity .25s ease;
     opacity: .95;
+    pointer-events: auto;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
   }
 
   .slides-arrow:hover{
@@ -251,7 +412,7 @@ const slides = [
   }
 
   .slides-arrow-left{
-    left: 20px;
+    left: 12px;
   }
 
   .slides-arrow-left > span{
@@ -259,11 +420,17 @@ const slides = [
   }
 
   .slides-arrow-right{
-    right: 20px;
+    right: 12px;
   }
 
   .slides-arrow-right > span{
     transform: translate(1px, -1px);
+  }
+
+  .slides-arrow::before{
+    content: "";
+    position: absolute;
+    inset: -10px;
   }
 
   .slides-dots{
@@ -296,7 +463,9 @@ const slides = [
 
   @media (max-width: 767px){
     .slides-track{
-      height: 730px;
+      height: auto;
+      min-height: 0;
+      transition: height .45s ease;
     }
 
     .slide-media-desktop{
@@ -305,11 +474,14 @@ const slides = [
 
     .slide-media-mobile{
       display: block;
+      width: 100%;
+      height: auto;
+      object-fit: contain;
     }
 
     .slides-arrow{
-      width: 44px;
-      height: 44px;
+      width: 52px;
+      height: 52px;
     }
 
     .slides-arrow > span{
@@ -317,21 +489,27 @@ const slides = [
     }
 
     .slides-arrow-left{
-      left: 8px;
+      left: 4px;
     }
 
     .slides-arrow-right{
-      right: 8px;
+      right: 4px;
     }
 
-    .slides-dots{
-      bottom: 10px;
-      gap: 8px;
+    .slide-item.is-entering-right{
+      transform: translate3d(3.5%, 0, 0);
     }
 
-    .slides-dot{
-      width: 8px;
-      height: 8px;
+    .slide-item.is-exiting-left{
+      transform: translate3d(-2.5%, 0, 0);
+    }
+
+    .slide-item.is-entering-left{
+      transform: translate3d(-3.5%, 0, 0);
+    }
+
+    .slide-item.is-exiting-right{
+      transform: translate3d(2.5%, 0, 0);
     }
   }
 </style>
