@@ -1,5 +1,4 @@
 ---
-import { actions } from "astro:actions";
 import Input from "../Input.astro";
 import Wrapper from "../Wrapper.astro";
 ---
@@ -26,7 +25,7 @@ import Wrapper from "../Wrapper.astro";
           Completa tus datos y nuestro equipo te contactará para evaluar tu consumo y proponerte una solución más eficiente.
         </p>
 
-        <form method="post" id="contact-form" action={actions.sendContactEmail} class="mt-8 sm:mt-7">
+        <form id="contact-form" class="mt-8 sm:mt-7">
           <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-4">
             <div class="sm:col-span-2">
               <Input
@@ -71,7 +70,7 @@ import Wrapper from "../Wrapper.astro";
 
             <button
               type="submit"
-              class="inline-flex min-h-13 items-center justify-center rounded-full bg-yellow-mrperu px-8 py-3 text-[1rem] font-semibold text-white shadow-[inset_0_4.41px_12.12px_rgba(0,0,0,0.22),0_10px_28px_rgba(0,0,0,0.18)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-yellow-mrperu/90 active:translate-y-0"
+              class="inline-flex min-h-13 cursor-pointer items-center justify-center rounded-full bg-yellow-mrperu px-8 py-3 text-[1rem] font-semibold text-white shadow-[inset_0_4.41px_12.12px_rgba(0,0,0,0.22),0_10px_28px_rgba(0,0,0,0.18)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-yellow-mrperu/90 active:translate-y-0"
             >
               Enviar
             </button>
