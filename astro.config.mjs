@@ -27,6 +27,18 @@ export default defineConfig({
         access: 'secret',
         optional: false,
         default: 'INFORM_VALID_EMAIL'
+      }),
+      RECAPTCHA_SECRET_KEY: envField.string({
+        context: 'server',
+        access: 'secret',
+        optional: false,
+        default: 'INFORM_VALID_KEY'
+      }),
+      RECAPTCHA_SITE_KEY: envField.string({
+        context: 'client',
+        access: 'public',
+        optional: false,
+        default: 'INFORM_VALID_KEY'
       })
     }
   },
