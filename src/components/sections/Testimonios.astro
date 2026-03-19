@@ -2,43 +2,29 @@
 const cards = [
   {
     id: 1,
-    name: "Lucía Rivera",
-    role: "Directora",
-    text: "testimonio",
+    name: "Gabriel Vila",
+    role: "Cosecha Andina",
+    text: "Los compresores Atlas Copco nos brindan aire comprimido constante, gran eficiencia energética y un funcionamiento silencioso. Han mejorado significativamente nuestras operaciones.",
     image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=900&q=80",
   },
   {
     id: 2,
-    name: "Lucía Rivera",
-    role: "Directora",
-    text: "testimonio",
+    name: "César Esteban",
+    role: "Exandal",
+    text: "Los compresores VSDs nos brindan eficiencia, confiabilidad y monitoreo remoto que nos permite anticipar mantenimientos y evitar paradas operativas.",
     image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=900&q=80",
   },
   {
     id: 3,
-    name: "Lucía Rivera",
-    role: "Directora",
-    text: "testimonio",
+    name: "Rubén García",
+    role: "Corporación Agrosur Ssamy",
+    text: "Comenzamos con un compresor VSD+ de 20 HP y al comprobar el ahorro energético que nos brindaba, decidimos incorporar un segundo equipo VSD+ de 30 HP para una nueva línea de producción.Desde entonces, ha sido una excelente decisión para optimizar el funcionamiento de nuestras máquinas selectoras de grano",
     image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=900&q=80",
     featured: true,
   },
-  {
-    id: 4,
-    name: "Lucía Rivera",
-    role: "Directora",
-    text: "testimonio",
-    image: "https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?auto=format&fit=crop&w=900&q=80",
-  },
-  {
-    id: 5,
-    name: "Lucía Rivera",
-    role: "Directora",
-    text: "testimonio",
-    image: "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=900&q=80",
-  },
 ];
 
-const title = "TESTIMONIOS";
+const title = "EMPRESAS QUE CONFÍAN EN NOSOTROS";
 ---
 
 <section id="testimonios" class=" py-8 sm:py-12 lg:py-14">
@@ -47,14 +33,14 @@ const title = "TESTIMONIOS";
       <div class="h-px w-full bg-slate-200"></div>
       <div class="absolute left-1/2 top-0 z-10 w-[calc(100%-16px)] sm:w-auto sm:min-w-[520px] lg:min-w-[620px] -translate-x-1/2 -translate-y-1/2 mb-2">
         <div class="rounded-[12px] bg-white px-4 py-2 sm:px-8 shadow-[0_10px_25px_rgba(0,0,0,0.18)] ring-1 ring-black/5 sm:rounded-[14px]">
-          <span class="text-blue-mrperu block text-center text-balance font-extrabold tracking-wide text-[14px] leading-tight sm:text-[16px] lg:text-[24px]">
+          <span class="text-blue-mrperu block text-center text-balance font-extrabold tracking-wide text-[16px] leading-tight sm:text-[18px] lg:text-[26px]">
             {title}
           </span>
         </div>
       </div>
     </div>
 
-    <div class="relative overflow-hidden py-8 sm:py-10 lg:py-12 mt-3 sm:mt-4 lg:mt-5">
+    <div class="relative overflow-hidden py-10 sm:py-12 lg:py-14 mt-4 sm:mt-5 lg:mt-6">
       <div class="testimonios-stage-wrap">
         <button class="testimonios-arrow bg-yellow-mrperu testimonios-arrow-left" type="button" aria-label="Anterior">
           <span aria-hidden="true">‹</span>
@@ -78,8 +64,11 @@ const title = "TESTIMONIOS";
                 </div>
 
                 <div class="testimonial-info">
-                  <h3>{card.name} / {card.role}</h3>
-                  <p>{card.text}</p>
+                  <div class="testimonial-meta">
+                    <h3>{card.name}</h3>
+                    <span class="testimonial-role">{card.role}</span>
+                  </div>
+                  <p class="testimonial-text">“{card.text}”</p>
                 </div>
               </article>
             );
@@ -197,7 +186,7 @@ const title = "TESTIMONIOS";
 <style>
   .testimonios-stage{
     position: relative;
-    height: 470px;
+    height: 620px;
   }
 
   .testimonios-stage-wrap{
@@ -289,8 +278,8 @@ const title = "TESTIMONIOS";
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 190px;
-    border-radius: 24px;
+    width: 280px;
+    border-radius: 28px;
     overflow: hidden;
     background: #fff;
     box-shadow: 0 18px 38px rgba(0,0,0,0.18);
@@ -303,7 +292,7 @@ const title = "TESTIMONIOS";
   }
 
   .testimonial-image-wrap{
-    height: 250px;
+    height: 340px;
     overflow: hidden;
   }
 
@@ -315,142 +304,226 @@ const title = "TESTIMONIOS";
   }
 
   .testimonial-info{
-    background: #08a2d7;
+    position: relative;
+    background: linear-gradient(180deg, #08a2d7 0%, #0694c7 100%);
     color: #fff;
-    padding: 14px 14px 18px;
-    min-height: 98px;
+    padding: 22px 22px 26px;
+    min-height: 220px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 12px;
   }
 
   .testimonial-info h3{
     margin: 0;
-    font-size: 13px;
-    line-height: 1.25;
-    font-weight: 400;
+    font-size: 24px;
+    line-height: 1.15;
+    font-weight: 800;
+    letter-spacing: -0.01em;
   }
 
-  .testimonial-info p{
-    margin: 4px 0 0;
-    font-size: 11px;
-    line-height: 1.35;
-    opacity: .95;
+  .testimonial-text{
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.65;
+    opacity: .96;
+    text-wrap: pretty;
+  }
+
+  .testimonial-meta{
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .testimonial-role{
+    display: inline-block;
+    font-size: 14px;
+    line-height: 1.3;
+    font-weight: 600;
+    opacity: .82;
+  }
+
+  .testimonial-info::before{
+    content: "“";
+    position: absolute;
+    top: 10px;
+    right: 16px;
+    font-size: 58px;
+    line-height: 1;
+    font-weight: 800;
+    color: rgba(255,255,255,.16);
+    pointer-events: none;
   }
 
   .card-left-2{
-    transform: translate(calc(-50% - 310px), -50%) scale(.82);
+    transform: translate(calc(-50% - 430px), -50%) scale(.84);
     z-index: 1;
-    opacity: .42;
+    opacity: .34;
   }
 
   .card-left-1{
-    transform: translate(calc(-50% - 155px), -50%) scale(.9);
+    transform: translate(calc(-50% - 260px), -50%) scale(.9);
     z-index: 2;
-    opacity: .72;
+    opacity: .62;
   }
 
   .card-center{
-    transform: translate(-50%, -50%) scale(1.06);
+    transform: translate(-50%, -50%) scale(1.04);
     opacity: 1;
     filter: blur(0);
     box-shadow: 0 24px 56px rgba(0,0,0,0.22);
-    z-index: 3;
+    z-index: 4;
   }
 
   .card-right-1{
-    transform: translate(calc(-50% + 155px), -50%) scale(.9);
+    transform: translate(calc(-50% + 260px), -50%) scale(.9);
     z-index: 2;
-    opacity: .72;
+    opacity: .62;
   }
 
   .card-right-2{
-    transform: translate(calc(-50% + 310px), -50%) scale(.82);
+    transform: translate(calc(-50% + 430px), -50%) scale(.84);
     z-index: 1;
-    opacity: .42;
+    opacity: .34;
+  }
+
+  .card-left-1 .testimonial-text,
+  .card-right-1 .testimonial-text,
+  .card-left-2 .testimonial-text,
+  .card-right-2 .testimonial-text{
+    display: none;
+  }
+
+  .card-left-1 .testimonial-info,
+  .card-right-1 .testimonial-info{
+    min-height: 112px;
+    padding: 18px 18px 20px;
+    gap: 6px;
+  }
+
+  .card-left-2 .testimonial-info,
+  .card-right-2 .testimonial-info{
+    min-height: 96px;
+    padding: 16px 16px 18px;
+    gap: 4px;
+  }
+
+  .card-left-1 .testimonial-info::before,
+  .card-right-1 .testimonial-info::before,
+  .card-left-2 .testimonial-info::before,
+  .card-right-2 .testimonial-info::before{
+    display: none;
+  }
+
+  .card-left-1 .testimonial-info h3,
+  .card-right-1 .testimonial-info h3{
+    font-size: 18px;
+  }
+
+  .card-left-2 .testimonial-info h3,
+  .card-right-2 .testimonial-info h3{
+    font-size: 16px;
+  }
+
+  .card-left-1 .testimonial-role,
+  .card-right-1 .testimonial-role,
+  .card-left-2 .testimonial-role,
+  .card-right-2 .testimonial-role{
+    font-size: 12px;
+    opacity: .78;
   }
 
   @media (min-width: 640px){
     .testimonios-stage{
-      height: 520px;
+      height: 660px;
     }
 
     .testimonial-card{
-      width: 240px;
+      width: 320px;
     }
 
     .testimonial-image-wrap{
-      height: 320px;
+      height: 380px;
     }
 
     .testimonial-info{
-      padding: 18px 18px 22px;
-      min-height: 114px;
+      padding: 24px 24px 30px;
+      min-height: 228px;
+      gap: 12px;
     }
 
     .testimonial-info h3{
-      font-size: 18px;
+      font-size: 24px;
     }
 
-    .testimonial-info p{
-      margin-top: 6px;
-      font-size: 14px;
-    }
-
-    .card-left-2{
-      transform: translate(calc(-50% - 400px), -50%) scale(.84);
+    .testimonial-text{
+      margin-top: 0;
+      font-size: 15px;
+      line-height: 1.65;
     }
 
     .card-left-1{
-      transform: translate(calc(-50% - 210px), -50%) scale(.92);
-    }
-
-    .card-center{
-      transform: translate(-50%, -50%) scale(1.06);
+      transform: translate(calc(-50% - 280px), -50%) scale(.9);
     }
 
     .card-right-1{
-      transform: translate(calc(-50% + 210px), -50%) scale(.92);
+      transform: translate(calc(-50% + 280px), -50%) scale(.9);
+    }
+
+    .card-left-2{
+      transform: translate(calc(-50% - 470px), -50%) scale(.84);
+    }
+
+    .card-center{
+      transform: translate(-50%, -50%) scale(1.05);
     }
 
     .card-right-2{
-      transform: translate(calc(-50% + 400px), -50%) scale(.84);
+      transform: translate(calc(-50% + 470px), -50%) scale(.84);
     }
   }
 
   @media (max-width: 639px){
     .testimonios-stage{
-      height: 420px;
+      height: 500px;
     }
 
     .testimonial-card{
-      width: 170px;
-      border-radius: 20px;
+      width: 220px;
+      border-radius: 22px;
     }
 
     .testimonial-image-wrap{
-      height: 220px;
+      height: 250px;
     }
 
     .testimonial-info{
-      padding: 12px 12px 16px;
-      min-height: 88px;
+      padding: 16px 16px 20px;
+      min-height: 152px;
+      gap: 8px;
     }
 
     .testimonial-info h3{
-      font-size: 12px;
+      font-size: 17px;
+      line-height: 1.15;
     }
 
-    .testimonial-info p{
-      font-size: 10px;
+    .testimonial-text{
+      font-size: 12px;
+      line-height: 1.5;
     }
 
     .card-left-2{
-      transform: translate(calc(-50% - 118px), -50%) scale(.72);
-      opacity: .24;
+      transform: translate(calc(-50% - 135px), -50%) scale(.74);
+      opacity: .18;
       z-index: 1;
     }
 
     .card-left-1{
-      transform: translate(calc(-50% - 58px), -50%) scale(.82);
-      opacity: .55;
+      transform: translate(calc(-50% - 86px), -50%) scale(.82);
+      opacity: .46;
       z-index: 2;
     }
 
@@ -462,14 +535,14 @@ const title = "TESTIMONIOS";
     }
 
     .card-right-1{
-      transform: translate(calc(-50% + 58px), -50%) scale(.82);
-      opacity: .55;
+      transform: translate(calc(-50% + 86px), -50%) scale(.82);
+      opacity: .46;
       z-index: 2;
     }
 
     .card-right-2{
-      transform: translate(calc(-50% + 118px), -50%) scale(.72);
-      opacity: .24;
+      transform: translate(calc(-50% + 135px), -50%) scale(.74);
+      opacity: .18;
       z-index: 1;
     }
 
@@ -480,11 +553,11 @@ const title = "TESTIMONIOS";
     }
 
     .testimonios-arrow-left{
-      left: 2px;
+      left: 6px;
     }
 
     .testimonios-arrow-right{
-      right: 2px;
+      right: 6px;
     }
 
     .testimonios-dots{
@@ -495,6 +568,38 @@ const title = "TESTIMONIOS";
     .testimonios-dot{
       width: 8px;
       height: 8px;
+    }
+
+    .testimonial-role{
+      font-size: 11px;
+    }
+
+    .testimonial-info::before{
+      top: 8px;
+      right: 12px;
+      font-size: 42px;
+    }
+
+    .card-left-1 .testimonial-info,
+    .card-right-1 .testimonial-info{
+      min-height: 84px;
+      padding: 14px 14px 16px;
+    }
+
+    .card-left-2 .testimonial-info,
+    .card-right-2 .testimonial-info{
+      min-height: 74px;
+      padding: 12px 12px 14px;
+    }
+
+    .card-left-1 .testimonial-info h3,
+    .card-right-1 .testimonial-info h3{
+      font-size: 14px;
+    }
+
+    .card-left-2 .testimonial-info h3,
+    .card-right-2 .testimonial-info h3{
+      font-size: 12px;
     }
   }
 </style>

@@ -7,6 +7,7 @@ import youtube from "../../assets/youtube.svg";
 import facebook from "../../assets/facebook.svg";
 import instagram from "../../assets/instagram.svg";
 import atlasLogoWhite from "../../assets/AtlasLogoWhite.png";
+import sello34 from "../../assets/sello-34.webp";
 
 const year = new Date().getFullYear();
 const whatsappMessage = encodeURIComponent(`¡Hola👋 gracias por escribirnos!
@@ -141,7 +142,7 @@ const secondNavList = [
                         <a
                             href={item.href}
                             target={`${item.external ? "_blank" : "_self"}`}
-                            class="text-base text-white sm:text-lg"
+                            class="text-base text-white text-[20px]"
                         >
                             {item.text}
                         </a>
@@ -154,6 +155,12 @@ const secondNavList = [
                     alt="Atlas Copco Distribuidor Autorizado"
                     width={170}
                     class="mx-auto lg:mx-0"
+                />
+                <Image
+                    src={sello34}
+                    alt="Sello 34 años MR Perú"
+                    width={150}
+                    class="mx-auto mt-4 lg:mx-0"
                 />
             </div>
         </div>

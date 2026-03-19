@@ -23,7 +23,7 @@ const videos = [
   },
   {
     id: "caso-4",
-    label: "Planta OSLO Punta Negra",
+    label: "Puesta en marcha de compresores VSDs en planta OSLO Punta Negra",
     src: "/casos-exito/4.Planta-OSLO-Punta-Negra.mp4",
     poster: "/thumbs/casos-exito/4.Planta-OSLO-Punta-Negra.jpg",
   },
@@ -47,7 +47,7 @@ const list = videos.slice(1);
       <div class="h-px w-full bg-slate-200"></div>
       <div class="absolute left-1/2 top-0 z-10 w-[calc(100%-16px)] sm:w-auto sm:min-w-[520px] lg:min-w-[420px] -translate-x-1/2 -translate-y-1/2 mb-2">
         <div class="rounded-[12px] bg-white px-4 py-2 sm:px-8 shadow-[0_10px_25px_rgba(0,0,0,0.18)] ring-1 ring-black/5 sm:rounded-[14px]">
-          <span class="text-blue-mrperu block text-center text-balance font-extrabold tracking-wide text-[14px] leading-tight sm:text-[16px] lg:text-[24px]">
+          <span class="text-blue-mrperu block text-center text-balance font-extrabold tracking-wide text-[16px] leading-tight sm:text-[18px] lg:text-[26px]">
             {title}
           </span>
         </div>
@@ -80,12 +80,14 @@ const list = videos.slice(1);
             class="casos-thumb group relative min-w-[260px] overflow-hidden rounded-[14px] bg-white text-left shadow-[0_12px_24px_rgba(0,0,0,0.14)] transition hover:-translate-y-0.5 hover:shadow-[0_16px_32px_rgba(0,0,0,0.16)] focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0 sm:min-w-[300px] sm:rounded-[18px] sm:shadow-[0_14px_34px_rgba(0,0,0,0.16)] md:min-w-0"
             data-video-src={t.src}
             data-video-poster={t.poster}
+            data-video-label={t.label}
             aria-label={`Ver ${t.label}`}
           >
             <div class="relative">
               <img
                 src={t.poster}
                 alt={t.label}
+                data-thumb-image
                 class="block w-full aspect-video object-cover"
                 loading="lazy"
                 decoding="async"
@@ -95,7 +97,7 @@ const list = videos.slice(1);
                 ▶ Ver
               </span>
             </div>
-            <span class="block bg-white px-3 py-3 text-sm font-bold leading-snug text-slate-800 sm:px-4">
+            <span data-thumb-label class="block bg-white px-3 py-3 text-sm font-bold leading-snug text-slate-800 sm:px-4">
               {t.label}
             </span>
           </button>
@@ -113,6 +115,11 @@ const list = videos.slice(1);
     const buttons = document.querySelectorAll(".casos-thumb[data-video-src][data-video-poster]");
 
     const scrollArea = document.querySelector(".casos-scroll");
+    let currentMain = {
+      src: mainSource.getAttribute("src") || "",
+      poster: mainVideo.getAttribute("poster") || "",
+      label: "Planta de arándanos",
+    };
 
     if (scrollArea) {
       let isDown = false;
@@ -155,18 +162,49 @@ const list = videos.slice(1);
       window.addEventListener("mouseup", stopDragging);
     }
 
-    buttons.forEach((btn, index) => {
+    buttons.forEach((btn) => {
       btn.addEventListener("click", () => {
-        const src = btn.getAttribute("data-video-src");
-        const poster = btn.getAttribute("data-video-poster");
-        if (!src) return;
+        const nextSrc = btn.getAttribute("data-video-src");
+        const nextPoster = btn.getAttribute("data-video-poster");
+        const nextLabel = btn.getAttribute("data-video-label") || "";
+        if (!nextSrc) return;
+
+        const previousMain = { ...currentMain };
+
         mainVideo.pause();
         mainVideo.currentTime = 0;
-        mainVideo.setAttribute("poster", poster || "");
-        mainSource.setAttribute("src", src);
+        mainVideo.setAttribute("poster", nextPoster || "");
+        mainSource.setAttribute("src", nextSrc);
         mainVideo.load();
-        setActive(btn);
         mainVideo.play().catch(() => {});
+
+        currentMain = {
+          src: nextSrc,
+          poster: nextPoster || "",
+          label: nextLabel,
+        };
+
+        btn.setAttribute("data-video-src", previousMain.src);
+        btn.setAttribute("data-video-poster", previousMain.poster);
+        btn.setAttribute("data-video-label", previousMain.label);
+
+        const thumbImage = btn.querySelector("[data-thumb-image]");
+        const thumbLabel = btn.querySelector("[data-thumb-label]");
+
+        if (thumbImage) {
+          thumbImage.setAttribute("src", previousMain.poster);
+          thumbImage.setAttribute("alt", previousMain.label);
+        }
+
+        btn.setAttribute("aria-label", `Ver ${previousMain.label}`);
+
+        if (thumbLabel) {
+          thumbLabel.textContent = previousMain.label;
+        }
+
+        if (scrollArea) {
+          scrollArea.appendChild(btn);
+        }
       });
     });
   }
