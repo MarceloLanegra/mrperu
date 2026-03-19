@@ -1,6 +1,7 @@
 ---
 import Input from "../Input.astro";
 import Wrapper from "../Wrapper.astro";
+import { RECAPTCHA_SITE_KEY } from "astro:env/client";
 ---
 
 <section
@@ -69,8 +70,9 @@ import Wrapper from "../Wrapper.astro";
             </p>
 
             <button
+              id="submit-button"
               type="submit"
-              class="inline-flex min-h-13 cursor-pointer items-center justify-center rounded-full bg-yellow-mrperu px-8 py-3 text-[1rem] font-semibold text-white shadow-[inset_0_4.41px_12.12px_rgba(0,0,0,0.22),0_10px_28px_rgba(0,0,0,0.18)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-yellow-mrperu/90 active:translate-y-0"
+              class="inline-flex min-h-13 cursor-pointer items-center justify-center rounded-full bg-yellow-mrperu px-8 py-3 text-[1rem] font-semibold text-white shadow-[inset_0_4.41px_12.12px_rgba(0,0,0,0.22),0_10px_28px_rgba(0,0,0,0.18)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-yellow-mrperu/90 active:translate-y-0 disabled:opacity-75 disabled:cursor-not-allowed"
             >
             Solicitar Diagnóstico
             </button>
@@ -81,11 +83,15 @@ import Wrapper from "../Wrapper.astro";
   </Wrapper>
 </section>
 
+<script is:inline src={`https://www.google.com/recaptcha/api.js?render=${RECAPTCHA_SITE_KEY}`}></script>
+
 <script>
   import { isInputError } from "astro:actions"
   import { actions } from "astro:actions"
+  import { RECAPTCHA_SITE_KEY } from "astro:env/client"
 
   const form = document.getElementById('contact-form') as HTMLFormElement
+  const submitBtn = document.getElementById('submit-button') as HTMLButtonElement
   const messageResponse = document.getElementById('form-message') as HTMLSpanElement
   const fullNameError = document.getElementById('fullName-error') as HTMLSpanElement
   const companyError = document.getElementById('company-error') as HTMLSpanElement
@@ -113,41 +119,72 @@ import Wrapper from "../Wrapper.astro";
     const form = e.target as HTMLFormElement
     const formData = new FormData(form)
 
-    const { data, error } = await actions.sendContactEmail(formData)
-    
-    if (data) {
-      form.reset()
-      messageResponse.textContent = data.message
-      messageResponse.classList.remove('hidden')
-      messageResponse.classList.add('block', 'text-green-500')
-    } 
+    submitBtn.disabled = true
 
-    if (isInputError(error)) {
-      if (error.fields.fullName) {
-        const message = error.fields.fullName.join(', ')
-        fullNameError.textContent = message
-        fullNameError.classList.remove('hidden')
-        fullNameError.classList.add('block', 'text-red-500')
-      }
-      if (error.fields.company) {
-        const message = error.fields.company.join(', ')
-        companyError.textContent = message
-        companyError.classList.remove('hidden')
-        companyError.classList.add('block', 'text-red-500')
-      }
-      if (error.fields.email) {
-        const message = error.fields.email.join(', ')
-        emailError.textContent = message
-        emailError.classList.remove('hidden')
-        emailError.classList.add('block', 'text-red-500')
-      }
-      if (error.fields.phone) {
-        const message = error.fields.phone.join(', ')
-        phoneError.textContent = message
-        phoneError.classList.remove('hidden')
-        phoneError.classList.add('block', 'text-red-500')
+    const submitFormWithRecaptcha = async (token: string) => {
+      formData.append('recaptcha', token)
+
+      const { data, error } = await actions.sendContactEmail(formData)
+      
+      submitBtn.disabled = false
+
+      if (data) {
+        form.reset()
+        messageResponse.textContent = data.message
+        messageResponse.classList.remove('hidden')
+        messageResponse.classList.add('block', 'text-green-500')
+      } 
+
+      if (isInputError(error)) {
+        if (error.fields.fullName) {
+          const message = error.fields.fullName.join(', ')
+          fullNameError.textContent = message
+          fullNameError.classList.remove('hidden')
+          fullNameError.classList.add('block', 'text-red-500')
+        }
+        if (error.fields.company) {
+          const message = error.fields.company.join(', ')
+          companyError.textContent = message
+          companyError.classList.remove('hidden')
+          companyError.classList.add('block', 'text-red-500')
+        }
+        if (error.fields.email) {
+          const message = error.fields.email.join(', ')
+          emailError.textContent = message
+          emailError.classList.remove('hidden')
+          emailError.classList.add('block', 'text-red-500')
+        }
+        if (error.fields.phone) {
+          const message = error.fields.phone.join(', ')
+          phoneError.textContent = message
+          phoneError.classList.remove('hidden')
+          phoneError.classList.add('block', 'text-red-500')
+        }
+      } else if (error) {
+        messageResponse.textContent = error.message
+        messageResponse.classList.remove('hidden')
+        messageResponse.classList.add('block', 'text-red-500')
       }
     }
+
+    if (typeof grecaptcha === 'undefined') {
+      submitBtn.disabled = false
+      messageResponse.textContent = 'Error: reCAPTCHA aún no ha cargado. Inténtalo en un momento.'
+      messageResponse.classList.remove('hidden')
+      messageResponse.classList.add('block', 'text-red-500')
+      return
+    }
+
+    grecaptcha.ready(function() {
+      grecaptcha.execute(RECAPTCHA_SITE_KEY, {action: 'submit'}).then(function(token: string) {
+        submitFormWithRecaptcha(token)
+      }).catch(function(err: any) {
+        submitBtn.disabled = false
+        messageResponse.textContent = 'Error de conexión con reCAPTCHA. Inténtalo de nuevo.'
+        messageResponse.classList.remove('hidden')
+        messageResponse.classList.add('block', 'text-red-500')
+      })
+    })
   }
 
   if (form && form instanceof HTMLFormElement) {
