@@ -212,7 +212,7 @@ const slides = [
 
       window.setTimeout(() => {
         finishAnimation(incomingSlide, outgoingSlide);
-      }, 520);
+      }, 650);
     };
 
     const stopAutoplay = () => {
@@ -294,7 +294,7 @@ const slides = [
     width: 100%;
     overflow: hidden;
     height: auto;
-    transition: height .45s ease;
+    transition: height .6s cubic-bezier(.22,.61,.36,1);
   }
 
   .slide-item{
@@ -305,51 +305,53 @@ const slides = [
     height: auto;
     opacity: 0;
     pointer-events: none;
-    transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0) scale(1.015);
     transition:
-      opacity .5s ease,
-      transform .5s cubic-bezier(.22,.61,.36,1);
+      opacity .65s ease,
+      transform .65s cubic-bezier(.22,.61,.36,1);
     will-change: transform, opacity;
   }
 
   .slide-item.is-active{
     opacity: 1;
     z-index: 1;
+    transform: translate3d(0, 0, 0) scale(1);
   }
 
   .slide-item.is-current{
     pointer-events: auto;
     z-index: 2;
+    transform: translate3d(0, 0, 0) scale(1);
   }
 
   .slide-item.is-entering-right,
   .slide-item.is-exiting-left{
-    transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0) scale(1);
   }
 
   .slide-item.is-entering-right{
     opacity: 1;
-    transform: translate3d(6%, 0, 0);
+    transform: translate3d(4%, 0, 0) scale(1.01);
   }
 
   .slide-item.is-exiting-left{
     opacity: 0;
-    transform: translate3d(-4%, 0, 0);
+    transform: translate3d(-3%, 0, 0) scale(.995);
   }
 
   .slide-item.is-entering-left,
   .slide-item.is-exiting-right{
-    transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0) scale(1);
   }
 
   .slide-item.is-entering-left{
     opacity: 1;
-    transform: translate3d(-6%, 0, 0);
+    transform: translate3d(-4%, 0, 0) scale(1.01);
   }
 
   .slide-item.is-exiting-right{
     opacity: 0;
-    transform: translate3d(4%, 0, 0);
+    transform: translate3d(3%, 0, 0) scale(.995);
   }
 
   .slide-media{
@@ -389,17 +391,19 @@ const slides = [
     color: #f5b400;
     cursor: pointer;
     transform: translateY(-50%);
-    transition: transform .25s ease, color .25s ease, opacity .25s ease;
-    opacity: .95;
+    transition: transform .3s ease, color .3s ease, opacity .3s ease, filter .3s ease;
+    opacity: .9;
     pointer-events: auto;
     touch-action: manipulation;
     -webkit-tap-highlight-color: transparent;
+    filter: drop-shadow(0 8px 18px rgba(0,0,0,.18));
   }
 
   .slides-arrow:hover{
-    transform: translateY(-50%) scale(1.12);
+    transform: translateY(-50%) scale(1.08);
     color: #ffd24d;
     opacity: 1;
+    filter: drop-shadow(0 10px 22px rgba(0,0,0,.24));
   }
 
   .slides-arrow > span{
@@ -465,7 +469,7 @@ const slides = [
     .slides-track{
       height: auto;
       min-height: 0;
-      transition: height .45s ease;
+      transition: height .6s cubic-bezier(.22,.61,.36,1);
     }
 
     .slide-media-desktop{
@@ -497,19 +501,28 @@ const slides = [
     }
 
     .slide-item.is-entering-right{
-      transform: translate3d(3.5%, 0, 0);
+      transform: translate3d(2.5%, 0, 0) scale(1.01);
     }
 
     .slide-item.is-exiting-left{
-      transform: translate3d(-2.5%, 0, 0);
+      transform: translate3d(-2%, 0, 0) scale(.995);
     }
 
     .slide-item.is-entering-left{
-      transform: translate3d(-3.5%, 0, 0);
+      transform: translate3d(-2.5%, 0, 0) scale(1.01);
     }
 
     .slide-item.is-exiting-right{
-      transform: translate3d(2.5%, 0, 0);
+      transform: translate3d(2%, 0, 0) scale(.995);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .slides-track,
+    .slide-item,
+    .slides-arrow,
+    .slides-dot{
+      transition: none !important;
     }
   }
 </style>

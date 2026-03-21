@@ -61,21 +61,21 @@ const reels = [
 ];
 ---
 
-<section id="equipos" class="bg-white py-12 sm:pb-16">
+<section id="equipos" class="reels-reveal-section bg-white py-12 sm:pb-16">
   <div class="mx-auto w-[min(1400px,calc(100%-24px))]">
     <!-- pill title -->
-    <div class="relative mb-10 sm:mb-14 lg:mb-16">
+    <div class="reels-reveal reels-reveal-pill relative mb-16 sm:mb-14 lg:mb-16">
       <div class="h-px w-full bg-slate-200"></div>
       <div class="absolute left-1/2 top-0 z-10 w-[calc(100%-16px)] sm:w-auto sm:min-w-[520px] lg:min-w-[620px] -translate-x-1/2 -translate-y-1/2 mb-2">
-        <div class="rounded-[12px] bg-white px-4 py-2 sm:px-8 shadow-[0_10px_25px_rgba(0,0,0,0.18)] ring-1 ring-black/5 sm:rounded-[14px]">
-          <span class="text-blue-mrperu block text-center text-balance font-extrabold tracking-wide text-[16px] leading-tight sm:text-[18px] lg:text-[26px]">
+        <div class="rounded-[12px] bg-white px-4 py-3 sm:px-8 sm:py-2 shadow-[0_10px_25px_rgba(0,0,0,0.18)] ring-1 ring-black/5 sm:rounded-[14px]">
+          <span class="text-blue-mrperu block text-center text-balance font-extrabold tracking-wide text-[23px] leading-[1.2] sm:leading-tight sm:text-[18px] lg:text-[26px]">
             {title}
           </span>
         </div>
       </div>
     </div>
 
-    <div class="relative mt-3 sm:mt-4 lg:mt-5">
+    <div class="reels-reveal reels-reveal-track relative mt-3 sm:mt-4 lg:mt-5">
       <button type="button" class="reels-arrow reels-arrow-left" aria-label="Reel anterior">
         <span aria-hidden="true">‹</span>
       </button>
@@ -132,7 +132,73 @@ const reels = [
   </div>
 </section>
 
+<script is:inline>
+  (() => {
+    const section = document.querySelector('.reels-reveal-section');
+    if (!section) return;
+
+    const items = Array.from(section.querySelectorAll('.reels-reveal'));
+    if (!items.length) return;
+
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (reduceMotion) {
+      items.forEach((item) => item.classList.add('is-visible'));
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        });
+      },
+      {
+        threshold: 0.16,
+        rootMargin: '0px 0px -8% 0px',
+      }
+    );
+
+    items.forEach((item, index) => {
+      item.style.setProperty('--reveal-delay', `${index * 120}ms`);
+      observer.observe(item);
+    });
+  })();
+</script>
+
 <style>
+  .reels-reveal{
+    opacity: 0;
+    transform: translate3d(0, 28px, 0) scale(.985);
+    transition:
+      opacity .75s ease,
+      transform .75s cubic-bezier(.22,.61,.36,1);
+    transition-delay: var(--reveal-delay, 0ms);
+    will-change: opacity, transform;
+  }
+
+  .reels-reveal-pill{
+    transform: translate3d(0, 18px, 0) scale(.99);
+  }
+
+  .reels-reveal-track{
+    transform: translate3d(0, 32px, 0) scale(.985);
+  }
+
+  .reels-reveal.is-visible{
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .reels-reveal{
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+  }
   /* === Track (scroll + snap) === */
   .reels-track{
     display:flex;
