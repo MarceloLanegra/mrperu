@@ -88,7 +88,7 @@ const secondNavList = [
 
 <footer class="footer-reveal-section bg-blue-mrperu pt-12 pb-4 sm:pt-16 lg:pt-20">
     <Wrapper>
-        <div class="footer-reveal flex flex-col gap-10 sm:gap-12 lg:flex-row lg:items-start lg:justify-between lg:gap-16 xl:gap-24">
+        <div class="flex flex-col gap-10 sm:gap-12 lg:flex-row lg:items-start lg:justify-between lg:gap-16 xl:gap-24">
             <div class="flex flex-col items-center text-center lg:min-w-[220px] lg:items-start lg:text-left">
                 <Image
                     src={logo}
@@ -164,7 +164,7 @@ const secondNavList = [
                 />
             </div>
         </div>
-        <p class="footer-reveal mt-10 text-center text-sm font-semibold text-white sm:mt-12 sm:text-base">
+        <p class="mt-10 text-center text-sm font-semibold text-white sm:mt-12 sm:text-base">
             © {year} MR Perú. Todos los derechos reservados.
         </p>
     </Wrapper>
@@ -299,6 +299,7 @@ En breve nuestro especialista te atenderá ⚙️
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
+        console.log(entry)
           if (!entry.isIntersecting) return;
           entry.target.classList.add('is-visible');
           observer.unobserve(entry.target);
