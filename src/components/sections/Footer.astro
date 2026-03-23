@@ -299,7 +299,6 @@ En breve nuestro especialista te atenderá ⚙️
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-        console.log(entry)
           if (!entry.isIntersecting) return;
           entry.target.classList.add('is-visible');
           observer.unobserve(entry.target);
